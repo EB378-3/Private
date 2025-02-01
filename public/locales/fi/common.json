@@ -1,0 +1,13 @@
+{
+    "buttons": {
+      "resources": "Ressourcen",
+      "contact": "Kontakt",
+      "discoveryFlight": "Schnupperflug",
+      "bookings": "Buchungen",
+      "logbook": "Logbuch",
+      "notice": "Mitteilung",
+      "profile": "Profil",
+      "logout": "Abmelden"
+    }
+  }
+  

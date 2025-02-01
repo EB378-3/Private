@@ -14,6 +14,8 @@ import { AppIcon } from "@components/app-icon";
 import { ColorModeContextProvider } from "@contexts/color-mode";
 import { authProviderClient } from "@providers/auth-provider/auth-provider.client";
 import { dataProvider } from "@providers/data-provider";
+import { NextIntlClientProvider } from "next-intl";
+import { getLocale, getMessages } from "next-intl/server";
 
 export const metadata: Metadata = {
   title: "Refine",
@@ -23,7 +25,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -32,54 +34,59 @@ export default function RootLayout({
   const theme = cookieStore.get("theme");
   const defaultMode = theme?.value === "dark" ? "dark" : "light";
 
+  const locale = await getLocale();
+  const messages = await getMessages();
+
   return (
-    <html lang="en">
+    <html lang={locale}>
       <body>
         <Suspense>
           <RefineKbarProvider>
             <ColorModeContextProvider defaultMode={defaultMode}>
-              <RefineSnackbarProvider>
-                <DevtoolsProvider>
-                  <Refine
-                    routerProvider={routerProvider}
-                    authProvider={authProviderClient}
-                    dataProvider={dataProvider}
-                    notificationProvider={useNotificationProvider}
-                    resources={[
-                      {
-                        name: "blog_posts",
-                        list: "/blog-posts",
-                        create: "/blog-posts/create",
-                        edit: "/blog-posts/edit/:id",
-                        show: "/blog-posts/show/:id",
-                        meta: {
-                          canDelete: true,
+              <NextIntlClientProvider locale={locale} messages={messages}>
+                <RefineSnackbarProvider>
+                  <DevtoolsProvider>
+                    <Refine
+                      routerProvider={routerProvider}
+                      authProvider={authProviderClient}
+                      dataProvider={dataProvider}
+                      notificationProvider={useNotificationProvider}
+                      resources={[
+                        {
+                          name: "blog_posts",
+                          list: "/blog-posts",
+                          create: "/blog-posts/create",
+                          edit: "/blog-posts/edit/:id",
+                          show: "/blog-posts/show/:id",
+                          meta: {
+                            canDelete: true,
+                          },
                         },
-                      },
-                      {
-                        name: "categories",
-                        list: "/categories",
-                        create: "/categories/create",
-                        edit: "/categories/edit/:id",
-                        show: "/categories/show/:id",
-                        meta: {
-                          canDelete: true,
+                        {
+                          name: "categories",
+                          list: "/categories",
+                          create: "/categories/create",
+                          edit: "/categories/edit/:id",
+                          show: "/categories/show/:id",
+                          meta: {
+                            canDelete: true,
+                          },
                         },
-                      },
-                    ]}
-                    options={{
-                      syncWithLocation: true,
-                      warnWhenUnsavedChanges: true,
-                      useNewQueryKeys: true,
-                      projectId: "M7fG6h-ni9Kms-kqarEz",
-                      title: { text: "Refine Project", icon: <AppIcon /> },
-                    }}
-                  >
-                    {children}
-                    <RefineKbar />
-                  </Refine>
-                </DevtoolsProvider>
-              </RefineSnackbarProvider>
+                      ]}
+                      options={{
+                        syncWithLocation: true,
+                        warnWhenUnsavedChanges: true,
+                        useNewQueryKeys: true,
+                        projectId: "M7fG6h-ni9Kms-kqarEz",
+                        title: { text: "Refine Project", icon: <AppIcon /> },
+                      }}
+                    >
+                      {children}
+                      <RefineKbar />
+                    </Refine>
+                  </DevtoolsProvider>
+                </RefineSnackbarProvider>
+              </NextIntlClientProvider>
             </ColorModeContextProvider>
           </RefineKbarProvider>
         </Suspense>

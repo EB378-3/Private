@@ -1,0 +1,18 @@
+{
+    "buttons": {
+      "resources": "Resources",
+      "contact": "Contact",
+      "discoveryFlight": "Discovery Flight",
+      "bookings": "Bookings",
+      "logbook": "Logbook",
+      "notice": "Notice",
+      "profile": "Profile",
+      "logout": "Logout"
+    },
+    "hero": {
+      "affordable_aircraft_rentals": "Affordable Aircraft Rentals",
+      "explore_southern_finland": "Explore the beauty of Southern Finland from the skies."
+    }
+    
+  }
+  
