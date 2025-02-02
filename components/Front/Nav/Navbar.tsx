@@ -34,10 +34,10 @@ interface NavbarProps extends RefineThemedLayoutV2HeaderProps {
   locale?: string;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ children, locale, isSticky, sticky }) => {
+const Navbar: React.FC<NavbarProps> = ({ locale }) => {
   const t = useTranslations("NavbarLinks");
   const theme = useTheme();
-  const isLargeScreen = useMediaQuery(theme.breakpoints.up("lg"));
+  const isLargeScreen = useMediaQuery(theme.breakpoints.up("md"));
   const { push } = useNavigation();
   const { mode, setMode } = useContext(ColorModeContext);
 
@@ -128,7 +128,14 @@ const Navbar: React.FC<NavbarProps> = ({ children, locale, isSticky, sticky }) =
                 {link.label}
               </Button>
             ))}
-            {children}
+            <IconButton
+              color="inherit"
+              onClick={() => {
+                setMode();
+              }}
+            >
+              {mode === "dark" ? <LightModeOutlined /> : <DarkModeOutlined />}
+            </IconButton>
             <Select
               value={currentLocale}
               onChange={handleLanguageChange}
@@ -136,7 +143,7 @@ const Navbar: React.FC<NavbarProps> = ({ children, locale, isSticky, sticky }) =
                 borderRadius: 1,
                 fontSize: "1rem",
                 px: 1,
-                py: 0.5,
+                py: 0,
                 backgroundColor: "primary.main",
                 color: "primary.contrastText",
                 border: `1px solid`,
@@ -153,14 +160,24 @@ const Navbar: React.FC<NavbarProps> = ({ children, locale, isSticky, sticky }) =
           </Box>
         ) : (
           // Mobile: Menu toggle button
-          <IconButton
-            edge="end"
-            color="inherit"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            sx={{ display: { lg: "none" } }}
-          >
-            {isMobileMenuOpen ? <CloseIcon /> : <MenuIcon />}
-          </IconButton>
+          <Box>
+            <IconButton
+              color="inherit"
+              onClick={() => {
+                setMode();
+              }}
+            >
+              {mode === "dark" ? <LightModeOutlined /> : <DarkModeOutlined />}
+            </IconButton>
+            <IconButton
+              edge="end"
+              color="inherit"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              sx={{ display: { lg: "none" } }}
+            >
+              {isMobileMenuOpen ? <CloseIcon /> : <MenuIcon />}
+            </IconButton>
+          </Box>
         )}
       </Toolbar>
 
@@ -203,15 +220,6 @@ const Navbar: React.FC<NavbarProps> = ({ children, locale, isSticky, sticky }) =
               {link.label}
             </Button>
           ))}
-          {children}
-          <IconButton
-            color="inherit"
-            onClick={() => {
-              setMode();
-            }}
-          >
-            {mode === "dark" ? <LightModeOutlined /> : <DarkModeOutlined />}
-          </IconButton>
           <Select
             value={currentLocale}
             onChange={handleLanguageChange}
@@ -219,8 +227,8 @@ const Navbar: React.FC<NavbarProps> = ({ children, locale, isSticky, sticky }) =
             sx={{
               borderRadius: 1,
               fontSize: "1rem",
-              px: 1,
-              py: 0.5,
+              px: 0.5,
+              py: 0.35,
               backgroundColor: "primary.main",
               color: "primary.contrastText",
               border: `1px solid`,

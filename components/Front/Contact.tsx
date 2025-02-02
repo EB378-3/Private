@@ -16,6 +16,7 @@ import Link from "@mui/material/Link";
 import PhoneIcon from "@mui/icons-material/Phone";
 import EmailIcon from "@mui/icons-material/Email";
 import BusinessIcon from "@mui/icons-material/Business";
+import { BorderColor } from "@node_modules/@mui/icons-material";
 
 // Create motion-enabled components
 const MotionBox = motion(Box);
@@ -121,6 +122,29 @@ const Contact = () => {
                     name="name"
                     label={t("name")}
                     required
+                    sx={{
+                      // Target the outlined input wrapper
+                      "& .MuiOutlinedInput-root": {
+                        // Set the border color for the default state
+                        "& fieldset": {
+                          borderColor: "black",
+                        },
+                        // When hovering, keep the border black
+                        "&:hover fieldset": {
+                          borderColor: "secondary.dark",
+                        },
+                        // When focused, keep the border black
+                        "&.Mui-focused fieldset": {
+                          borderColor: "primary",
+                        },
+                        // Set the input text color
+                        color: "black",
+                      },
+                      // Also style the label (if needed)
+                      "& .MuiInputLabel-root": {
+                        color: "black",
+                      },
+                    }}
                   />
                 </MotionBox>
                 <MotionBox
@@ -137,6 +161,29 @@ const Contact = () => {
                     name="email"
                     label={t("emailentry")}
                     required
+                    sx={{
+                      // Target the outlined input wrapper
+                      "& .MuiOutlinedInput-root": {
+                        // Set the border color for the default state
+                        "& fieldset": {
+                          borderColor: "black",
+                        },
+                        // When hovering, keep the border black
+                        "&:hover fieldset": {
+                          borderColor: "secondary.dark",
+                        },
+                        // When focused, keep the border black
+                        "&.Mui-focused fieldset": {
+                          borderColor: "primary",
+                        },
+                        // Set the input text color
+                        color: "black",
+                      },
+                      // Also style the label (if needed)
+                      "& .MuiInputLabel-root": {
+                        color: "black",
+                      },
+                    }}
                   />
                 </MotionBox>
                 <MotionBox
@@ -154,7 +201,31 @@ const Contact = () => {
                     required
                     multiline
                     rows={4}
+                    sx={{
+                      // Target the outlined input wrapper
+                      "& .MuiOutlinedInput-root": {
+                        // Set the border color for the default state
+                        "& fieldset": {
+                          borderColor: "black",
+                        },
+                        // When hovering, keep the border black
+                        "&:hover fieldset": {
+                          borderColor: "secondary.dark",
+                        },
+                        // When focused, keep the border black
+                        "&.Mui-focused fieldset": {
+                          borderColor: "primary",
+                        },
+                        // Set the input text color
+                        color: "black",
+                      },
+                      // Also style the label (if needed)
+                      "& .MuiInputLabel-root": {
+                        color: "black",
+                      },
+                    }}
                   />
+
                 </MotionBox>
                 <MotionBox
                   whileHover={{ scale: 1.05 }}

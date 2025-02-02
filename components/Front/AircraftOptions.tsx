@@ -51,12 +51,12 @@ export default function AircraftOptions() {
       component="section"
       id="recource-selction"
       sx={{
-        py: 8,
+        pb: 2,
         backgroundColor: "background.default",
         color: "text.primary",
       }}
     >
-      <Typography variant="h4" align="center" mb={4}>
+      <Typography variant="h4" align="center" mb={3}>
         {t("title")}
       </Typography>
       <Box

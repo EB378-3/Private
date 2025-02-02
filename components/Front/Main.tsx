@@ -70,13 +70,20 @@ const Main = () => {
         }}
       >
         {/* Hero Section */}
-        <Hero/>
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1 }}
+        >
+          <Hero/>
+        </motion.div>
 
         {/* Problem-Solution Section */}
         <Container sx={{ mt: 8, textAlign: "center", px: { xs: 2, sm: 3, lg: 6 } }}>
           <motion.div initial="hidden" whileInView="visible" variants={slideInRight}>
             <Typography variant="h3" sx={{ fontWeight: "bold", mb: 4 }}>
-              {t("Affordable Aircraft Rentals")}
+              {t("Affordable Aircraft Rentals")}<br/>
               <Box
                 component="span"
                 sx={{

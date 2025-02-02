@@ -31,7 +31,7 @@ const Hero = () => {
       sx={{
         position: "relative",
         width: "100%",
-        height: { xs: "45vh", md: "45vh" },
+        height: { xs: "30vh", sm: "35vh", md: "40vh" },
         overflow: "hidden",
         display: "flex",
         flexDirection: { xs: "column", md: "row" },
@@ -68,7 +68,7 @@ const Hero = () => {
           alignItems: "center",
           width: "100%",
           height: "100%",
-          px: { xs: 2, sm: 3, md: 6 },
+          px: { xs: 1, sm: 2, md: 3, lg: 5, },
         }}
       >
         {/* Hero Text */}
@@ -85,7 +85,7 @@ const Hero = () => {
               variant="h2"
               component="h1"
               sx={{
-                color: "info.contrastText",
+                color: "#fff",
                 fontWeight: "bold",
                 fontSize: { xs: "2rem", sm: "3rem", md: "4rem", lg: "5rem" },
                 lineHeight: 1.2,
@@ -104,7 +104,7 @@ const Hero = () => {
             <Typography
               variant="subtitle1"
               sx={{
-                color: "info.contrastText",
+                color: "#fff",
                 mt: 2,
                 textShadow: "0 1px 3px rgba(0,0,0,0.5)",
               }}
@@ -143,7 +143,7 @@ const Hero = () => {
                   px: 2,
                   py: 1,
                   bgcolor: "secondary.main",
-                  color: "secondary.contrastText",
+                  color: "#fff",
                   fontWeight: "bold",
                   borderRadius: "50px",
                   boxShadow: 3,
@@ -162,8 +162,7 @@ const Hero = () => {
                 sx={{
                   px: 2,
                   py: 1,
-                  borderColor: "secondary.main",
-                  color: "secondary.main",
+                  color: "#fff",
                   fontWeight: "bold",
                   borderRadius: "50px",
                   boxShadow: 3,
@@ -181,11 +180,10 @@ const Hero = () => {
               width: "100%",
               height: "100%",
               background: (theme) =>
-                `linear-gradient(to right, ${theme.palette.primary.main}, ${theme.palette.primary.dark})`,
-              transform: "skewX(-45deg)",
-              overflow: "hidden",
+                `linear-gradient(to top, ${theme.palette.primary.main}, ${theme.palette.primary.dark})`,
+              transform: "skewX(-25deg)",
+              overflow: "auto",
               position: "relative",
-              mt: 2,
             }}
           >
             <Box
@@ -195,12 +193,13 @@ const Hero = () => {
                 left: 0,
                 width: "100%",
                 height: "100%",
-                transform: "skewX(45deg)",
+                transform: "skewX(25deg)",
                 display: "flex",
                 flexDirection: { xs: "column", xl: "row" },
                 justifyContent: "center",
                 alignItems: "center",
                 gap: { xs: 1, md: 2, lg: 3 },
+                zIndex: -10,
               }}
             >
               <NextLink href={`/${locale}/book`} passHref>
@@ -215,8 +214,8 @@ const Hero = () => {
                   sx={{
                     px: { xs: 3, md: 4 },
                     py: { xs: 1, md: 2 },
-                    bgcolor: "secondary.main",
-                    color: "secondary.contrastText",
+                    bgcolor: "secondary.main.dark",
+                    color: "#fff",
                     fontWeight: "bold",
                     borderRadius: "50px",
                     boxShadow: 3,
@@ -249,11 +248,12 @@ const Hero = () => {
                   sx={{
                     px: { xs: 3, md: 4 },
                     py: { xs: 1, md: 2 },
-                    borderColor: "secondary.main",
-                    color: "secondary.main",
+                    borderColor: "#fff",
+                    color: "#fff",
                     fontWeight: "bold",
                     borderRadius: "50px",
                     boxShadow: 3,
+                    zIndex: 20,
                   }}
                 >
                   {t("Contact Us")}

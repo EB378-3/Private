@@ -3,6 +3,7 @@ import { Slot } from "@radix-ui/react-slot";
 import { styled } from "@mui/material/styles";
 import MuiButton from "@mui/material/Button";
 import type { ButtonProps as MuiButtonProps } from "@mui/material/Button";
+import { BorderColor } from "@node_modules/@mui/icons-material";
 
 export interface ButtonProps extends MuiButtonProps {
   /**

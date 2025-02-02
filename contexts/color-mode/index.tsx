@@ -79,7 +79,7 @@ export const ColorModeContextProvider: React.FC<PropsWithChildren<ColorModeConte
         main: '#29b6f6',
         light: '#4fc3f7',
         dark: '#0288d1',
-        contrastText: '#000',
+        contrastText: '#fff',
       },
       success: {
         main: '#66bb6a',
