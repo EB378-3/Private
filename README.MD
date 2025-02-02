@@ -51,3 +51,4 @@ MIT
 npm install @radix-ui/react-dropdown-menu lucide-react
 Framer motion
 next-intl
+npm i sharp
