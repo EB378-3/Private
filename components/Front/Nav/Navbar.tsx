@@ -27,6 +27,7 @@ import CloseIcon from "@mui/icons-material/Close";
 // import { useNavigation } from "@pankod/refine-core";
 // If using refine v5 or later, use:
 import { useNavigation } from "@refinedev/core";
+import { usePathname } from "@i18n/routing";
 
 interface NavbarProps extends RefineThemedLayoutV2HeaderProps {
   children?: React.ReactNode;
@@ -42,7 +43,7 @@ const Navbar: React.FC<NavbarProps> = ({ children, locale, isSticky, sticky }) =
 
   // Use window.location to get the current path.
   // (Alternatively, you could use Next.js' usePathname hook.)
-  const pathname = window.location.pathname;
+  const pathname = usePathname();
   const pathSegments = pathname.split("/");
   const currentLocale = pathSegments[1] || locale || "en";
 

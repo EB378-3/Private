@@ -45,7 +45,7 @@ const Hero = () => {
         style={{
           position: "absolute",
           inset: 0,
-          backgroundColor: "#000", // you can also use theme.palette.common.black if you prefer
+          backgroundColor: "theme.palette.common.black",
         }}
       >
         <NextImage
