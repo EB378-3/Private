@@ -1,4 +1,4 @@
-# refine-project
+# my-refine-nextjs-app.
 
 <div align="center" style="margin: 30px;">
     <a href="https://refine.dev">
@@ -47,9 +47,7 @@ To learn more about **Refine**, please check out the [Documentation](https://ref
 MIT
 
 
-
-
-
 # Imports
-NEXT-Intl
-Framer-motion
+npm install @radix-ui/react-dropdown-menu lucide-react
+Framer motion
+next-intl

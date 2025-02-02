@@ -24,7 +24,7 @@
     ],
     "paths": {
       "@*": [
-        "./src/*"
+        "./*"
       ],
       "@pages/*": [
         "./pages/*"
@@ -36,6 +36,8 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
+    ".next/types/**/*.mjs",
+    "next.config.mjs",
     ".next/types/**/*.ts"
   ],
   "exclude": [
