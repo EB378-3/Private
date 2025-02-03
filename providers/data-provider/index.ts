@@ -1,6 +1,7 @@
 "use client";
 
 import { dataProvider as dataProviderSupabase } from "@refinedev/supabase";
-import { supabaseClient } from "../../utils/supabase/client";
+import { supabaseBrowserClient } from "../../utils/supabase/client";
 
-export const dataProvider = dataProviderSupabase(supabaseClient);
+const supabase = supabaseBrowserClient();
+export const dataProvider = dataProviderSupabase(supabase);

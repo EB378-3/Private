@@ -1,64 +1,121 @@
 "use client";
 
+import React from "react";
 import { Stack, Typography } from "@mui/material";
-import { useOne, useShow } from "@refinedev/core";
+import { useShow } from "@refinedev/core";
 import {
   DateField,
-  MarkdownField,
   Show,
   TextFieldComponent as TextField,
+  MarkdownField,
 } from "@refinedev/mui";
 
-export default function BlogPostShow() {
+export default function LogbookShow() {
   const { query } = useShow({
-    meta: {
-      select: "*, categories(id,title)",
-    },
+    resource: "logbook", // use the logbook resource
+    meta: { select: "*" },
   });
 
   const { data, isLoading } = query;
-
   const record = data?.data;
-
-  const { data: categoryData, isLoading: categoryIsLoading } = useOne({
-    resource: "categories",
-    id: record?.categories?.id || "",
-    queryOptions: {
-      enabled: !!record,
-    },
-  });
 
   return (
     <Show isLoading={isLoading}>
       <Stack gap={1}>
         <Typography variant="body1" fontWeight="bold">
-          {"ID"}
+          Log ID
+        </Typography>
+        <TextField value={record?.logid} />
+
+        <Typography variant="body1" fontWeight="bold">
+          UUID
         </Typography>
         <TextField value={record?.id} />
 
         <Typography variant="body1" fontWeight="bold">
-          {"Title"}
+          Resource
         </Typography>
-        <TextField value={record?.title} />
+        <TextField value={record?.resource} />
 
         <Typography variant="body1" fontWeight="bold">
-          {"Content"}
+          Date
         </Typography>
-        <MarkdownField value={record?.content} />
+        <DateField value={record?.date} />
 
         <Typography variant="body1" fontWeight="bold">
-          {"Category"}
+          Pilot in Command
         </Typography>
-        {categoryIsLoading ? <>Loading...</> : <>{categoryData?.data?.title}</>}
-        <Typography variant="body1" fontWeight="bold">
-          {"Status"}
-        </Typography>
-        <TextField value={record?.status} />
+        <TextField value={record?.pic} />
 
         <Typography variant="body1" fontWeight="bold">
-          {"CreatedAt"}
+          Passengers
         </Typography>
-        <DateField value={record?.createdAt} />
+        <TextField value={record?.pax} />
+
+        <Typography variant="body1" fontWeight="bold">
+          Departure
+        </Typography>
+        <TextField value={record?.departure} />
+
+        <Typography variant="body1" fontWeight="bold">
+          Arrival
+        </Typography>
+        <TextField value={record?.arrival} />
+
+        <Typography variant="body1" fontWeight="bold">
+          Offblock
+        </Typography>
+        <DateField value={record?.offblock} />
+
+        <Typography variant="body1" fontWeight="bold">
+          Takeoff
+        </Typography>
+        <DateField value={record?.takeoff} />
+
+        <Typography variant="body1" fontWeight="bold">
+          Landing
+        </Typography>
+        <DateField value={record?.landing} />
+
+        <Typography variant="body1" fontWeight="bold">
+          Onblock
+        </Typography>
+        <DateField value={record?.onblock} />
+
+        <Typography variant="body1" fontWeight="bold">
+          Landings
+        </Typography>
+        <TextField value={record?.landings} />
+
+        <Typography variant="body1" fontWeight="bold">
+          Flight Rules
+        </Typography>
+        <TextField value={record?.flightrules} />
+
+        <Typography variant="body1" fontWeight="bold">
+          Fuel
+        </Typography>
+        <TextField value={record?.fuel} />
+
+        <Typography variant="body1" fontWeight="bold">
+          Flight Type
+        </Typography>
+        <TextField value={record?.flight_type} />
+
+        <Typography variant="body1" fontWeight="bold">
+          Details
+        </Typography>
+        <MarkdownField value={record?.details} />
+
+        <Typography variant="body1" fontWeight="bold">
+          Billing Details
+        </Typography>
+        <TextField value={record?.billing_details} />
+
+        <Typography variant="body1" fontWeight="bold">
+          Created At
+        </Typography>
+        <DateField value={record?.created_at} />
       </Stack>
     </Show>
   );

@@ -1,131 +1,245 @@
 "use client";
 
+import React from "react";
 import { Typography } from "@mui/material";
-import { DataGrid, type GridColDef } from "@mui/x-data-grid";
-import { useMany } from "@refinedev/core";
+import { DataGrid, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import {
+  List,
   DateField,
   DeleteButton,
   EditButton,
-  List,
   ShowButton,
   useDataGrid,
 } from "@refinedev/mui";
-import React from "react";
 
-export default function BlogPostList() {
+export default function LogbookList() {
+  // Configure the data grid for the "logbook" resource
   const { dataGridProps } = useDataGrid({
+    resource: "logbook",
     syncWithLocation: true,
-    meta: {
-      select: "*, categories(id,title)",
-    },
+    meta: { select: "*" },
   });
 
-  const { data: categoryData, isLoading: categoryIsLoading } = useMany({
-    resource: "categories",
-    ids:
-      dataGridProps?.rows
-        ?.map((item: any) => item?.categories?.id)
-        .filter(Boolean) ?? [],
-    queryOptions: {
-      enabled: !!dataGridProps?.rows,
-    },
-  });
-
-  const columns = React.useMemo<GridColDef[]>(
+  const columns: GridColDef[] = React.useMemo(
     () => [
       {
-        field: "id",
-        headerName: "ID",
+        field: "logid",
+        headerName: "Log ID",
         type: "number",
-        minWidth: 50,
-        display: "flex",
-        align: "left",
+        minWidth: 70,
         headerAlign: "left",
+        align: "left",
       },
       {
-        field: "title",
-        headerName: "Title",
+        field: "date",
+        headerName: "Date",
+        type: "date",
+        minWidth: 100,
+        headerAlign: "left",
+        align: "left",
+        valueGetter: ({ value }: GridRenderCellParams<any>) =>
+          value ? new Date(value) : null,
+        renderCell: ({ value }: GridRenderCellParams<any>) => (
+          <DateField value={value} />
+        ),
+      },
+      {
+        field: "pic",
+        headerName: "Pilot in Command",
+        minWidth: 150,
+        headerAlign: "left",
+        align: "left",
+        renderCell: ({ value }: GridRenderCellParams<any>) => (
+          <Typography variant="body2">{value || "-"}</Typography>
+        ),
+      },      
+      {
+        field: "pax",
+        headerName: "Passengers",
+        type: "number",
+        minWidth: 100,
+        headerAlign: "left",
+        align: "left",
+      },
+      {
+        field: "departure",
+        headerName: "Departure",
+        minWidth: 150,
+        headerAlign: "left",
+        align: "left",
+      },
+      {
+        field: "arrival",
+        headerName: "Arrival",
+        minWidth: 150,
+        headerAlign: "left",
+        align: "left",
+      },
+      {
+        field: "offblock",
+        headerName: "Offblock",
+        type: "dateTime",
+        minWidth: 150,
+        headerAlign: "left",
+        align: "left",
+        valueGetter: ({ value }: GridRenderCellParams<any>) =>
+          value ? new Date(value) : null,
+        renderCell: ({ value }: GridRenderCellParams<any>) => (
+          <DateField value={value} />
+        ),
+      },
+      {
+        field: "takeoff",
+        headerName: "Takeoff",
+        type: "dateTime",
+        minWidth: 150,
+        headerAlign: "left",
+        align: "left",
+        valueGetter: ({ value }: GridRenderCellParams<any>) =>
+          value ? new Date(value) : null,
+        renderCell: ({ value }: GridRenderCellParams<any>) => (
+          <DateField value={value} />
+        ),
+      },
+      {
+        field: "landing",
+        headerName: "Landing",
+        type: "dateTime",
+        minWidth: 150,
+        headerAlign: "left",
+        align: "left",
+        valueGetter: ({ value }: GridRenderCellParams<any>) =>
+          value ? new Date(value) : null,
+        renderCell: ({ value }: GridRenderCellParams<any>) => (
+          <DateField value={value} />
+        ),
+      },
+      {
+        field: "onblock",
+        headerName: "Onblock",
+        type: "dateTime",
+        minWidth: 150,
+        headerAlign: "left",
+        align: "left",
+        valueGetter: ({ value }: GridRenderCellParams<any>) =>
+          value ? new Date(value) : null,
+        renderCell: ({ value }: GridRenderCellParams<any>) => (
+          <DateField value={value} />
+        ),
+      },
+      {
+        field: "landings",
+        headerName: "Landings",
+        type: "number",
+        minWidth: 100,
+        headerAlign: "left",
+        align: "left",
+      },
+      {
+        field: "flightrules",
+        headerName: "Flight Rules",
+        minWidth: 120,
+        headerAlign: "left",
+        align: "left",
+      },
+      {
+        field: "night",
+        headerName: "Night",
+        minWidth: 100,
+        headerAlign: "left",
+        align: "left",
+      },
+      {
+        field: "ir",
+        headerName: "IR",
+        minWidth: 100,
+        headerAlign: "left",
+        align: "left",
+      },
+      {
+        field: "fuel",
+        headerName: "Fuel",
+        type: "number",
+        minWidth: 100,
+        headerAlign: "left",
+        align: "left",
+      },
+      {
+        field: "flight_type",
+        headerName: "Flight Type",
+        minWidth: 120,
+        headerAlign: "left",
+        align: "left",
+      },
+      {
+        field: "details",
+        headerName: "Details",
         minWidth: 200,
-        display: "flex",
-      },
-      {
-        field: "content",
-        flex: 1,
-        headerName: "Content",
-        minWidth: 250,
-        display: "flex",
-        renderCell: function render({ value }) {
+        headerAlign: "left",
+        align: "left",
+        renderCell: ({ value }: GridRenderCellParams<any>) => {
           if (!value) return "-";
           return (
-            <Typography
-              component="p"
-              whiteSpace="pre"
-              overflow="hidden"
-              textOverflow="ellipsis"
-            >
+            <Typography variant="body2" noWrap>
               {value}
             </Typography>
           );
         },
       },
       {
-        field: "categories",
-        headerName: "Category",
-        minWidth: 160,
-        display: "flex",
-        valueGetter: (_, row) => {
-          const value = row?.categories;
-          return value;
-        },
-        renderCell: function render({ value }) {
-          return categoryIsLoading ? (
-            <>Loading...</>
-          ) : (
-            categoryData?.data?.find((item) => item.id === value?.id)?.title
+        field: "billing_details",
+        headerName: "Billing Details",
+        minWidth: 200,
+        headerAlign: "left",
+        align: "left",
+        renderCell: ({ value }: GridRenderCellParams<any>) => {
+          if (!value) return "-";
+          return (
+            <Typography variant="body2" noWrap>
+              {value}
+            </Typography>
           );
         },
       },
       {
-        field: "status",
-        headerName: "Status",
-        minWidth: 80,
-        display: "flex",
-      },
-      {
-        field: "createdAt",
-        headerName: "Created at",
-        minWidth: 120,
-        display: "flex",
-        renderCell: function render({ value }) {
-          return <DateField value={value} />;
-        },
+        field: "created_at",
+        headerName: "Created At",
+        type: "dateTime",
+        minWidth: 150,
+        headerAlign: "left",
+        align: "left",
+        valueGetter: ({ value }: GridRenderCellParams<any>) =>
+          value ? new Date(value) : null,
+        renderCell: ({ value }: GridRenderCellParams<any>) => (
+          <DateField value={value} />
+        ),
       },
       {
         field: "actions",
         headerName: "Actions",
-        align: "right",
+        minWidth: 150,
         headerAlign: "right",
-        minWidth: 120,
+        align: "right",
         sortable: false,
-        display: "flex",
-        renderCell: function render({ row }) {
-          return (
-            <>
-              <EditButton hideText recordItemId={row.id} />
-              <ShowButton hideText recordItemId={row.id} />
-              <DeleteButton hideText recordItemId={row.id} />
-            </>
-          );
-        },
+        renderCell: ({ row }: GridRenderCellParams<any>) => (
+          <>
+            <EditButton hideText recordItemId={`${row.logid}-${row.id}`} />
+            <ShowButton hideText recordItemId={`${row.logid}-${row.id}`} />
+            <DeleteButton hideText recordItemId={`${row.logid}-${row.id}`} />
+          </>
+        ),
       },
     ],
-    [categoryData, categoryIsLoading]
+    []
   );
 
   return (
     <List>
-      <DataGrid {...dataGridProps} columns={columns} />
+      <DataGrid
+        {...dataGridProps}
+        columns={columns}
+        getRowId={(row) => `${row.logid}-${row.id}`}
+      />
     </List>
   );
 }
