@@ -62,7 +62,8 @@ export default function AircraftOptions() {
       <Box
         sx={{
           position: "relative",
-          width: "80%",
+          // Use 100% width on xs screens and 80% on medium and above
+          width: { xs: "100%", md: "80%" },
           mx: "auto",
           overflow: "hidden",
         }}
@@ -78,7 +79,11 @@ export default function AircraftOptions() {
           {aircrafts.map((aircraft) => (
             <Box
               key={aircraft.id}
-              sx={{ minWidth: "100%", textAlign: "center", p: 2 }}
+              sx={{
+                minWidth: "100%",
+                textAlign: "center",
+                p: { xs: 1, sm: 2 },
+              }}
             >
               <Image
                 src={aircraft.image}

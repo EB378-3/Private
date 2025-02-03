@@ -31,8 +31,9 @@ const Hero = () => {
       sx={{
         position: "relative",
         width: "100%",
-        height: { xs: "30vh", sm: "35vh", md: "40vh" },
-        overflow: "hidden",
+        // Use minHeight instead of a fixed height
+        minHeight: { xs: "25vh", sm: "25vh", md: "40vh" },
+        // Remove overflow hidden so all content is visible
         display: "flex",
         flexDirection: { xs: "column", md: "row" },
       }}
@@ -45,7 +46,9 @@ const Hero = () => {
         style={{
           position: "absolute",
           inset: 0,
-          backgroundColor: "theme.palette.common.black",
+          // Note: to use theme values you might want to access the theme directly via useTheme,
+          // here we are using a string literal for simplicity.
+          backgroundColor: "black",
         }}
       >
         <NextImage
@@ -67,8 +70,8 @@ const Hero = () => {
           justifyContent: "space-between",
           alignItems: "center",
           width: "100%",
-          height: "100%",
-          px: { xs: 1, sm: 2, md: 3, lg: 5, },
+          // Remove the fixed height to allow container to grow with its content
+          px: { xs: 0, sm: 2, md: 3, lg: 5 },
         }}
       >
         {/* Hero Text */}
@@ -115,7 +118,13 @@ const Hero = () => {
         </Box>
 
         {/* CTA Section */}
-        <Box sx={{ width: { xs: "100%", md: "35%" }, height: { xs: "auto", md: "45vh" } }}>
+        <Box
+          sx={{
+            width: { xs: "100%", md: "30%" },
+            // Let the CTA section grow naturally
+            height: "auto",
+          }}
+        >
           {/* Mobile CTA: Thin Box */}
           <Box
             sx={{
@@ -178,11 +187,11 @@ const Hero = () => {
             sx={{
               display: { xs: "none", md: "block" },
               width: "100%",
-              height: "100%",
+              height: "45vh", // Set a fixed height so the banner is visible
               background: (theme) =>
                 `linear-gradient(to top, ${theme.palette.primary.main}, ${theme.palette.primary.dark})`,
               transform: "skewX(-25deg)",
-              overflow: "auto",
+              overflow: "hidden", // Hide any overflow outside the container
               position: "relative",
             }}
           >
@@ -199,7 +208,7 @@ const Hero = () => {
                 justifyContent: "center",
                 alignItems: "center",
                 gap: { xs: 1, md: 2, lg: 3 },
-                zIndex: -10,
+                zIndex: 1, // Ensure this content is visible
               }}
             >
               <NextLink href={`/${locale}/book`} passHref>
@@ -253,7 +262,7 @@ const Hero = () => {
                     fontWeight: "bold",
                     borderRadius: "50px",
                     boxShadow: 3,
-                    zIndex: 20,
+                    zIndex: 2,
                   }}
                 >
                   {t("Contact Us")}
@@ -261,6 +270,7 @@ const Hero = () => {
               </NextLink>
             </Box>
           </Box>
+
         </Box>
       </Box>
     </Box>
