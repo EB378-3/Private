@@ -57,19 +57,11 @@ const Navbar: React.FC<NavbarProps> = ({ locale }) => {
   };
 
   // Navigation links for desktop and mobile menus
-  const navLinksDesktop = [
+  const navLinks = [
     { label: t("recource-selction"), href: `/${currentLocale}/#recource-selction` },
     { label: t("contact"), href: `/${currentLocale}/#contact` },
-    { label: t("bookDiscoveryFlight"), href: `/${currentLocale}/members/book` },
-    { label: t("members"), href: `/${currentLocale}/members` },
-  ];
-
-  const navLinksMobile = [
-    { label: t("recource-selction"), href: `/${currentLocale}/#recource-selction` },
-    { label: t("testimonials"), href: `/${currentLocale}/#testimonials` },
-    { label: t("contact"), href: `/${currentLocale}/#contact` },
-    { label: t("bookDiscoveryFlight"), href: `/${currentLocale}/members/book` },
-    { label: t("members"), href: `/${currentLocale}/members` },
+    { label: t("bookDiscoveryFlight"), href: `/${currentLocale}/book` },
+    { label: t("members"), href: `/${currentLocale}/login` },
   ];
 
   return (
@@ -106,7 +98,7 @@ const Navbar: React.FC<NavbarProps> = ({ locale }) => {
         {/* Desktop: Navigation links and language selector */}
         {isLargeScreen ? (
           <Box sx={{ display: "flex", gap: 3, alignItems: "center" }}>
-            {navLinksDesktop.map((link) => (
+            {navLinks.map((link) => (
               <Button
                 key={link.href}
                 onClick={() => push(link.href)}
@@ -194,7 +186,7 @@ const Navbar: React.FC<NavbarProps> = ({ locale }) => {
             gap: 2,
           }}
         >
-          {navLinksMobile.map((link) => (
+          {navLinks.map((link) => (
             <Button
               key={link.href}
               fullWidth
