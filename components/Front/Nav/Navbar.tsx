@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, ChangeEvent } from "react";
 import { useTranslations } from "next-intl";
 import NextImage from "next/image";
 import { RefineThemedLayoutV2HeaderProps } from "@refinedev/mui";
@@ -27,7 +27,7 @@ import CloseIcon from "@mui/icons-material/Close";
 // import { useNavigation } from "@pankod/refine-core";
 // If using refine v5 or later, use:
 import { useNavigation } from "@refinedev/core";
-import { usePathname } from "@i18n/routing";
+import { usePathname, useRouter } from "next/navigation";
 
 interface NavbarProps extends RefineThemedLayoutV2HeaderProps {
   children?: React.ReactNode;
@@ -44,16 +44,16 @@ const Navbar: React.FC<NavbarProps> = ({ locale }) => {
   // Use window.location to get the current path.
   // (Alternatively, you could use Next.js' usePathname hook.)
   const pathname = usePathname();
-  const pathSegments = pathname.split("/");
-  const currentLocale = pathSegments[1] || locale || "en";
+  const router = useRouter();
+  const currentLocale = pathname.split("/")[1] || locale || "en"; // Default to 'en'
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const handleLanguageChange = (e: SelectChangeEvent<string>) => {
-    const newLocale = e.target.value;
+  const handleLanguageChange = (event: SelectChangeEvent<string>) => {
+    const newLocale = event.target.value;
     if (newLocale === currentLocale) return;
-    const path = pathSegments.slice(2).join("/");
-    push(`/${newLocale}/${path}`);
+    const path = pathname.split("/").slice(2).join("/");
+    router.push(`/${newLocale}/${path}`);
   };
 
   // Navigation links for desktop and mobile menus
