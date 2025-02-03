@@ -20,7 +20,7 @@ import type { Viewport } from "next";
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
-  : "http://localhost:3000";
+  : "http://wingtemplate.netlify.app";
 
 const APP_NAME = "Wing T1";
 const APP_DEFAULT_TITLE = "Wing-T1";
