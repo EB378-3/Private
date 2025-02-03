@@ -61,7 +61,7 @@ const Navbar: React.FC<NavbarProps> = ({ locale }) => {
     { label: t("recource-selction"), href: `/${currentLocale}/#recource-selction` },
     { label: t("contact"), href: `/${currentLocale}/#contact` },
     { label: t("bookDiscoveryFlight"), href: `/${currentLocale}/book` },
-    { label: t("members"), href: `/${currentLocale}/login` },
+    { label: t("members"), href: `/${currentLocale}/members` },
   ];
 
   return (

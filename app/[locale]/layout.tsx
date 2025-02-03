@@ -20,7 +20,7 @@ import type { Viewport } from "next";
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
-  : "https://wingtemplate.netlify.app";
+  : "http://localhost:3000";
 
 const APP_NAME = "Wing T1";
 const APP_DEFAULT_TITLE = "Wing-T1";
@@ -28,9 +28,6 @@ const APP_TITLE_TEMPLATE = "%s - PWA App";
 const APP_DESCRIPTION = "Wing-T1 Template App";
 
 export const metadata: Metadata = {
-  icons: {
-    icon: "/favicon.ico",
-  },
   applicationName: APP_NAME,
   metadataBase: new URL(defaultUrl),
   title: {
@@ -38,7 +35,7 @@ export const metadata: Metadata = {
     template: APP_TITLE_TEMPLATE,
   }, // default title
   description: APP_DESCRIPTION,
-  manifest: "//manifest.json",
+  manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
@@ -72,9 +69,6 @@ export const viewport: Viewport = {
 };
 
 
-
-
-
 export default async function RootLayout({
   children,
   params: {locale}
@@ -105,11 +99,11 @@ export default async function RootLayout({
                       notificationProvider={useNotificationProvider}
                       resources={[
                         {
-                          name: "blog_posts",
-                          list: "/blog-posts",
-                          create: "/blog-posts/create",
-                          edit: "/blog-posts/edit/:id",
-                          show: "/blog-posts/show/:id",
+                          name: "members",
+                          list: "/members",
+                          create: "/members/create",
+                          edit: "/members/edit/:id",
+                          show: "/members/show/:id",
                           meta: {
                             canDelete: true,
                           },

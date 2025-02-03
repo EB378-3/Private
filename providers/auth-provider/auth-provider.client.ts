@@ -1,11 +1,15 @@
 "use client";
 
 import type { AuthProvider } from "@refinedev/core";
-import { supabaseClient } from "@utils/supabase/client";
+import { supabaseBrowserClient } from "@utils/supabase/client";
+
+
 
 export const authProviderClient: AuthProvider = {
+  
   login: async ({ email, password }) => {
-    const { data, error } = await supabaseClient.auth.signInWithPassword(
+    const supabase = await supabaseBrowserClient();
+    const { data, error } = await supabase.auth.signInWithPassword(
       {
         email,
         password,
@@ -20,7 +24,7 @@ export const authProviderClient: AuthProvider = {
     }
 
     if (data?.session) {
-      await supabaseClient.auth.setSession(data.session);
+      await supabase.auth.setSession(data.session);
 
       return {
         success: true,
@@ -38,7 +42,8 @@ export const authProviderClient: AuthProvider = {
     };
   },
   logout: async () => {
-    const { error } = await supabaseClient.auth.signOut();
+    const supabase = await supabaseBrowserClient();
+    const { error } = await supabase.auth.signOut();
 
     if (error) {
       return {
@@ -53,8 +58,10 @@ export const authProviderClient: AuthProvider = {
     };
   },
   register: async ({ email, password }) => {
+    const supabase = await supabaseBrowserClient();
+
     try {
-      const { data, error } = await supabaseClient.auth.signUp({
+      const { data, error } = await supabase.auth.signUp({
         email,
         password,
       });
@@ -88,7 +95,9 @@ export const authProviderClient: AuthProvider = {
     };
   },
   check: async () => {
-    const { data, error } = await supabaseClient.auth.getUser();
+    const supabase = await supabaseBrowserClient();
+
+    const { data, error } = await supabase.auth.getUser();
     const { user } = data;
 
     if (error) {
@@ -111,7 +120,8 @@ export const authProviderClient: AuthProvider = {
     };
   },
   getPermissions: async () => {
-    const user = await supabaseClient.auth.getUser();
+    const supabase = await supabaseBrowserClient();
+    const user = await supabase.auth.getUser();
 
     if (user) {
       return user.data.user?.role;
@@ -120,7 +130,8 @@ export const authProviderClient: AuthProvider = {
     return null;
   },
   getIdentity: async () => {
-    const { data } = await supabaseClient.auth.getUser();
+    const supabase = await supabaseBrowserClient();
+    const { data } = await supabase.auth.getUser();
 
     if (data?.user) {
       return {

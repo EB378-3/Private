@@ -1,13 +1,12 @@
-import { AuthPage } from "../../../components/auth-page";
-import { authProviderServer } from "../../../providers/auth-provider/auth-provider.server";
+import { AuthPage } from "@components/auth-page";
+import { authProviderServer } from "@providers/auth-provider/auth-provider.server";
 import { redirect } from "next/navigation";
 
-export default async function Login({ params }: { params: { locale: string } }) {
+export default async function Login() {
   const data = await getData();
 
   if (data.authenticated) {
-    // Use backticks and params.locale in the template literal
-    redirect(data.redirectTo || `/${params.locale}/members`);
+    redirect(data?.redirectTo || "/");
   }
 
   return <AuthPage type="login" />;
