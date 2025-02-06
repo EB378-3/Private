@@ -51,21 +51,21 @@ export default function AircraftOptions() {
       component="section"
       id="recource-selction"
       sx={{
-        pb: 2,
-        backgroundColor: "background.default",
-        color: "text.primary",
+        py: 4,
+        backgroundColor: theme.palette.background.default,
+        color: theme.palette.text.primary,
       }}
     >
-      <Typography variant="h4" align="center" mb={3}>
+      <Typography variant="h5" align="center" mb={3} sx={{ fontWeight: 600 }}>
         {t("title")}
       </Typography>
       <Box
         sx={{
           position: "relative",
-          // Use 100% width on xs screens and 80% on medium and above
           width: { xs: "100%", md: "80%" },
           mx: "auto",
           overflow: "hidden",
+          borderRadius: theme.shape.borderRadius,
         }}
       >
         {/* Aircraft Slides */}
@@ -82,7 +82,8 @@ export default function AircraftOptions() {
               sx={{
                 minWidth: "100%",
                 textAlign: "center",
-                p: { xs: 1, sm: 2 },
+                px: { xs: 1, sm: 2 },
+                py: 2,
               }}
             >
               <Image
@@ -94,12 +95,17 @@ export default function AircraftOptions() {
                   margin: "0 auto",
                   borderRadius: theme.shape.borderRadius,
                   boxShadow: theme.shadows[3],
+                  objectFit: "cover",
                 }}
               />
-              <Typography variant="h6" mt={2}>
+              <Typography variant="h6" mt={1} sx={{ fontWeight: "bold", fontSize: "1rem" }}>
                 {aircraft.name}
               </Typography>
-              <Typography variant="body2" color="text.secondary" mt={1}>
+              <Typography
+                variant="body2"
+                mt={0.5}
+                sx={{ color: theme.palette.text.secondary, fontSize: "0.875rem" }}
+              >
                 {aircraft.description}
               </Typography>
             </Box>
@@ -112,34 +118,36 @@ export default function AircraftOptions() {
           aria-label="Previous Slide"
           sx={{
             position: "absolute",
-            left: theme.spacing(2),
+            left: theme.spacing(1),
             top: "50%",
             transform: "translateY(-50%)",
-            backgroundColor: "rgba(0,0,0,0.3)",
-            color: "common.white",
+            backgroundColor: "rgba(0, 0, 0, 0.4)",
+            color: theme.palette.common.white,
             "&:hover": {
-              backgroundColor: "rgba(0,0,0,0.5)",
+              backgroundColor: "rgba(0, 0, 0, 0.6)",
             },
+            p: 0.5,
           }}
         >
-          <ChevronLeftIcon fontSize="large" />
+          <ChevronLeftIcon fontSize="medium" />
         </IconButton>
         <IconButton
           onClick={nextSlide}
           aria-label="Next Slide"
           sx={{
             position: "absolute",
-            right: theme.spacing(2),
+            right: theme.spacing(1),
             top: "50%",
             transform: "translateY(-50%)",
-            backgroundColor: "rgba(0,0,0,0.3)",
-            color: "common.white",
+            backgroundColor: "rgba(0, 0, 0, 0.4)",
+            color: theme.palette.common.white,
             "&:hover": {
-              backgroundColor: "rgba(0,0,0,0.5)",
+              backgroundColor: "rgba(0, 0, 0, 0.6)",
             },
+            p: 0.5,
           }}
         >
-          <ChevronRightIcon fontSize="large" />
+          <ChevronRightIcon fontSize="medium" />
         </IconButton>
       </Box>
     </Box>

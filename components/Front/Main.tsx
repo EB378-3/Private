@@ -13,6 +13,7 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { useTheme } from "@mui/material/styles";
+import PlaneLightUp from "@components/Front/PlaneLightUp";
 
 const Main = () => {
   const t = useTranslations("HomePage");
@@ -30,22 +31,23 @@ const Main = () => {
     visible: { opacity: 1, x: 0, transition: { duration: 1 } },
   };
 
-  // Data for the information cards
+  // Data for the information cards.
+  // Here, we use secondary palette colours for a distinct look.
   const cardsData = [
     {
       title: t("Flexible Booking"),
       detail: t("Choose rental times that fit your schedule"),
-      gradient: `linear-gradient(to bottom, ${theme.palette.primary.main}, ${theme.palette.primary.dark})`,
+      gradient: `linear-gradient(to bottom, ${theme.palette.secondary.light}, ${theme.palette.secondary.dark})`,
     },
     {
       title: t("Cost-Effective Pricing"),
       detail: t("Enjoy premium services at affordable rates"),
-      gradient: `linear-gradient(to bottom, ${theme.palette.secondary.main}, ${theme.palette.secondary.dark})`,
+      gradient: `linear-gradient(to bottom, ${theme.palette.secondary.light}, ${theme.palette.secondary.dark})`,
     },
     {
       title: t("Beautiful Destinations"),
       detail: t("Fly to stunning locations around Southern Finland"),
-      gradient: `linear-gradient(to bottom, ${theme.palette.info.main}, ${theme.palette.info.dark})`,
+      gradient: `linear-gradient(to bottom, ${theme.palette.secondary.light}, ${theme.palette.secondary.dark})`,
     },
   ];
 
@@ -76,21 +78,21 @@ const Main = () => {
           viewport={{ once: true }}
           transition={{ duration: 1 }}
         >
-          <Hero/>
+          <Hero />
         </motion.div>
 
         {/* Problem-Solution Section */}
         <Container sx={{ mt: 8, textAlign: "center", px: { xs: 2, sm: 3, lg: 6 } }}>
           <motion.div initial="hidden" whileInView="visible" variants={slideInRight}>
             <Typography variant="h3" sx={{ fontWeight: "bold", mb: 4 }}>
-              {t("Affordable Aircraft Rentals")}<br/>
+              {t("Affordable Aircraft Rentals")}<br />
               <Box
                 component="span"
                 sx={{
-                  backgroundColor: theme.palette.primary.dark,
+                  backgroundColor: theme.palette.secondary.main,
                   px: 2,
                   py: 1,
-                  color: theme.palette.common.white,
+                  color: theme.palette.secondary.contrastText,
                   borderRadius: 2,
                   ml: 2,
                   boxShadow: 3,
@@ -113,26 +115,27 @@ const Main = () => {
                     }}
                     style={{
                       background: item.gradient,
-                      padding: theme.spacing(3),
+                      padding: theme.spacing(2),
                       borderRadius: theme.shape.borderRadius,
                       boxShadow: theme.shadows[4],
-                      maxWidth: 350,
+                      maxWidth: 320,
                       margin: "0 auto",
                     }}
                   >
                     <Typography
                       variant="h5"
                       sx={{
-                        color: theme.palette.common.white,
+                        color: theme.palette.secondary.contrastText,
                         fontWeight: "bold",
-                        mb: 2,
+                        mb: 1,
+                        fontSize: "1rem",
                       }}
                     >
                       {item.title}
                     </Typography>
                     <Typography
-                      variant="body1"
-                      sx={{ color: theme.palette.grey[100] }}
+                      variant="body2"
+                      sx={{ color: theme.palette.grey[100], fontSize: "0.875rem" }}
                     >
                       {item.detail}
                     </Typography>
@@ -145,26 +148,26 @@ const Main = () => {
 
         {/* Call-to-Action */}
         <motion.div initial="hidden" whileInView="visible" variants={slideInRight}>
-          <Container sx={{ my: 8, textAlign: "center", px: { xs: 2, sm: 3, lg: 6 } }}>
-            <Typography variant="h4" sx={{ fontWeight: "bold", mb: 2 }}>
+          <Container sx={{ my: 6, textAlign: "center", px: { xs: 2, sm: 3, lg: 6 } }}>
+            <Typography variant="h4" sx={{ fontWeight: "bold", mb: 1, fontSize: "1.25rem" }}>
               {t("Start Your Adventure Today")}
             </Typography>
-            <Typography variant="h6" sx={{ mb: 4 }}>
+            <Typography variant="h6" sx={{ mb: 3, fontSize: "1rem" }}>
               {t("Discover the freedom of flight")}
             </Typography>
             <Link href={`/${locale}/book`} passHref>
               <motion.div whileHover={{ scale: 1.05 }}>
                 <Button
                   variant="contained"
-                  size="large"
+                  size="small"
                   sx={{
-                    px: 4,
-                    py: 1.5,
+                    px: 3,
+                    py: 1,
                     background: `linear-gradient(to right, ${theme.palette.primary.main}, ${theme.palette.primary.light})`,
                     color: theme.palette.common.white,
                     fontWeight: "bold",
                     borderRadius: 50,
-                    boxShadow: 3,
+                    boxShadow: 2,
                     textTransform: "none",
                   }}
                 >
@@ -174,6 +177,10 @@ const Main = () => {
             </Link>
           </Container>
         </motion.div>
+
+
+
+        <PlaneLightUp/>
 
         {/* Testimonials Section */}
         <motion.div initial="hidden" whileInView="visible" variants={fadeInUp}>

@@ -10,10 +10,12 @@ import { motion } from "framer-motion";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import { useTheme } from "@mui/material/styles";
 
 const Hero = () => {
   const t = useTranslations("HomePage");
   const locale = useLocale();
+  const theme = useTheme();
 
   // Framer-motion animation variants
   const fadeIn = {
@@ -88,9 +90,9 @@ const Hero = () => {
               variant="h2"
               component="h1"
               sx={{
-                color: "#fff",
+                color: theme.palette.primary.contrastText,
                 fontWeight: "bold",
-                fontSize: { xs: "2rem", sm: "3rem", md: "4rem", lg: "5rem" },
+                fontSize: { xs: "1rem", sm: "2rem", md: "3rem", lg: "4rem" },
                 lineHeight: 1.2,
                 textShadow: "0 2px 4px rgba(0,0,0,0.5)",
               }}
@@ -120,9 +122,10 @@ const Hero = () => {
         {/* CTA Section */}
         <Box
           sx={{
-            width: { xs: "100%", md: "30%" },
+            width: { xs: "100%", md: "35%" },
             // Let the CTA section grow naturally
             height: "auto",
+            
           }}
         >
           {/* Mobile CTA: Thin Box */}
@@ -186,11 +189,11 @@ const Hero = () => {
           <Box
             sx={{
               display: { xs: "none", md: "block" },
-              width: "100%",
+              width: "75%",
               height: "45vh", // Set a fixed height so the banner is visible
               background: (theme) =>
                 `linear-gradient(to top, ${theme.palette.primary.main}, ${theme.palette.primary.dark})`,
-              transform: "skewX(-25deg)",
+              transform: "skewX(-20deg)",
               overflow: "hidden", // Hide any overflow outside the container
               position: "relative",
             }}
@@ -202,7 +205,7 @@ const Hero = () => {
                 left: 0,
                 width: "100%",
                 height: "100%",
-                transform: "skewX(25deg)",
+                transform: "skewX(20deg)",
                 display: "flex",
                 flexDirection: { xs: "column", xl: "row" },
                 justifyContent: "center",

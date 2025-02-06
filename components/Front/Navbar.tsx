@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useContext, ChangeEvent } from "react";
+import React, { useState, useContext } from "react";
 import { useTranslations } from "next-intl";
 import NextImage from "next/image";
 import { RefineThemedLayoutV2HeaderProps } from "@refinedev/mui";
@@ -22,10 +22,7 @@ import { useTheme } from "@mui/material/styles";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 
-// Use the refine navigation hook
-// If using refine v4:
-// import { useNavigation } from "@pankod/refine-core";
-// If using refine v5 or later, use:
+// refine navigation hook
 import { useNavigation } from "@refinedev/core";
 import { usePathname, useRouter } from "next/navigation";
 
@@ -41,11 +38,9 @@ const Navbar: React.FC<NavbarProps> = ({ locale }) => {
   const { push } = useNavigation();
   const { mode, setMode } = useContext(ColorModeContext);
 
-  // Use window.location to get the current path.
-  // (Alternatively, you could use Next.js' usePathname hook.)
   const pathname = usePathname();
   const router = useRouter();
-  const currentLocale = pathname.split("/")[1] || locale || "en"; // Default to 'en'
+  const currentLocale = pathname.split("/")[1] || locale || "en";
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -69,8 +64,8 @@ const Navbar: React.FC<NavbarProps> = ({ locale }) => {
       component="nav"
       sx={{
         width: "100%",
-        backgroundColor: "primary.main",
-        color: "primary.contrastText",
+        background: `linear-gradient(360deg, ${theme.palette.primary.dark}, ${theme.palette.primary.light})`,
+        color: theme.palette.primary.contrastText,
       }}
     >
       <Toolbar
@@ -78,8 +73,8 @@ const Navbar: React.FC<NavbarProps> = ({ locale }) => {
           justifyContent: "space-between",
           maxWidth: 1200,
           mx: "auto",
-          px: 2,
-          py: 1,
+          px: 1,
+          py: 0.5,
         }}
       >
         {/* Logo: Clickable area that navigates to home */}
@@ -89,15 +84,15 @@ const Navbar: React.FC<NavbarProps> = ({ locale }) => {
         >
           <NextImage
             src="/Logo.png" // Replace with your logo path
-            width={60}
-            height={20}
+            width={50}
+            height={17} // Adjust height to maintain proportions
             alt="Southern Finland Aircraft Rentals"
           />
         </Box>
 
-        {/* Desktop: Navigation links and language selector */}
+        {/* Desktop: Navigation links, dark mode toggle, and language selector */}
         {isLargeScreen ? (
-          <Box sx={{ display: "flex", gap: 3, alignItems: "center" }}>
+          <Box sx={{ display: "flex", gap: 1.5, alignItems: "center" }}>
             {navLinks.map((link) => (
               <Button
                 key={link.href}
@@ -105,15 +100,13 @@ const Navbar: React.FC<NavbarProps> = ({ locale }) => {
                 sx={{
                   fontWeight: "bold",
                   textTransform: "none",
-                  fontSize: "1rem",
-                  color: "primary.contrastText",
+                  fontSize: "0.875rem",
+                  color: theme.palette.primary.contrastText,
+                  padding: theme.spacing(0.5, 1),
                   transition: "transform 0.3s, background 0.3s",
                   "&:hover": {
-                    background: (theme) =>
-                      `linear-gradient(to right, ${theme.palette.secondary.main}, ${theme.palette.secondary.light})`,
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    transform: "scale(1.1)",
+                    background: `linear-gradient(45deg, ${theme.palette.primary.main}, ${theme.palette.secondary.light})`,
+                    transform: "scale(1.05)",
                   },
                 }}
               >
@@ -122,27 +115,29 @@ const Navbar: React.FC<NavbarProps> = ({ locale }) => {
             ))}
             <IconButton
               color="inherit"
-              onClick={() => {
-                setMode();
+              onClick={() => setMode()}
+              sx={{
+                ml: 0.5,
+                p: 0.5,
+                border: `1px solid ${theme.palette.primary.contrastText}`,
               }}
             >
-              {mode === "dark" ? <LightModeOutlined /> : <DarkModeOutlined />}
+              {mode === "dark" ? <LightModeOutlined fontSize="small" /> : <DarkModeOutlined fontSize="small" />}
             </IconButton>
             <Select
               value={currentLocale}
               onChange={handleLanguageChange}
               sx={{
                 borderRadius: 1,
-                fontSize: "1rem",
-                px: 1,
-                py: 0,
-                backgroundColor: "primary.main",
-                color: "primary.contrastText",
-                border: `1px solid`,
-                borderColor: "secondary.main",
-                ".MuiSelect-icon": { color: "primary.contrastText" },
+                fontSize: "0.875rem",
+                px: 0.75,
+                py: 0.25,
+                backgroundColor: theme.palette.primary.main,
+                color: theme.palette.primary.contrastText,
+                border: `1px solid ${theme.palette.secondary.main}`,
+                ".MuiSelect-icon": { color: theme.palette.primary.contrastText, fontSize: "1rem" },
                 "&:hover": {
-                  borderColor: "secondary.light",
+                  borderColor: theme.palette.secondary.light,
                 },
               }}
             >
@@ -151,23 +146,25 @@ const Navbar: React.FC<NavbarProps> = ({ locale }) => {
             </Select>
           </Box>
         ) : (
-          // Mobile: Menu toggle button
-          <Box>
+          // Mobile: Dark mode toggle and menu toggle
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
             <IconButton
               color="inherit"
-              onClick={() => {
-                setMode();
+              onClick={() => setMode()}
+              sx={{
+                p: 0.5,
+                border: `1px solid ${theme.palette.primary.contrastText}`,
               }}
             >
-              {mode === "dark" ? <LightModeOutlined /> : <DarkModeOutlined />}
+              {mode === "dark" ? <LightModeOutlined fontSize="small" /> : <DarkModeOutlined fontSize="small" />}
             </IconButton>
             <IconButton
               edge="end"
               color="inherit"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              sx={{ display: { lg: "none" } }}
+              sx={{ p: 0.5 }}
             >
-              {isMobileMenuOpen ? <CloseIcon /> : <MenuIcon />}
+              {isMobileMenuOpen ? <CloseIcon fontSize="small" /> : <MenuIcon fontSize="small" />}
             </IconButton>
           </Box>
         )}
@@ -177,13 +174,13 @@ const Navbar: React.FC<NavbarProps> = ({ locale }) => {
       {!isLargeScreen && isMobileMenuOpen && (
         <Box
           sx={{
-            display: { lg: "none" },
-            backgroundColor: "primary.dark",
-            color: "primary.contrastText",
-            px: 2,
-            py: 2,
+            display: "flex",
             flexDirection: "column",
-            gap: 2,
+            background: theme.palette.primary.dark,
+            color: theme.palette.primary.contrastText,
+            px: 1,
+            py: 1,
+            gap: 1,
           }}
         >
           {navLinks.map((link) => (
@@ -197,14 +194,12 @@ const Navbar: React.FC<NavbarProps> = ({ locale }) => {
               sx={{
                 fontWeight: "bold",
                 textTransform: "none",
-                fontSize: "1rem",
-                color: "primary.contrastText",
+                fontSize: "0.875rem",
+                color: theme.palette.common.white,
+                padding: theme.spacing(0.5, 1),
                 transition: "transform 0.3s, background 0.3s",
                 "&:hover": {
-                  background: (theme) =>
-                    `linear-gradient(to right, ${theme.palette.secondary.main}, ${theme.palette.secondary.light})`,
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
+                  background: `linear-gradient(45deg, ${theme.palette.secondary.main}, ${theme.palette.secondary.light})`,
                   transform: "scale(1.05)",
                 },
               }}
@@ -218,16 +213,15 @@ const Navbar: React.FC<NavbarProps> = ({ locale }) => {
             fullWidth
             sx={{
               borderRadius: 1,
-              fontSize: "1rem",
-              px: 0.5,
-              py: 0.35,
-              backgroundColor: "primary.main",
-              color: "primary.contrastText",
-              border: `1px solid`,
-              borderColor: "secondary.main",
-              ".MuiSelect-icon": { color: "primary.contrastText" },
+              fontSize: "0.875rem",
+              px: 0.75,
+              py: 0.25,
+              backgroundColor: theme.palette.primary.main,
+              color: theme.palette.primary.contrastText,
+              border: `1px solid ${theme.palette.secondary.main}`,
+              ".MuiSelect-icon": { color: theme.palette.primary.contrastText, fontSize: "1rem" },
               "&:hover": {
-                borderColor: "secondary.light",
+                borderColor: theme.palette.secondary.light,
               },
             }}
           >

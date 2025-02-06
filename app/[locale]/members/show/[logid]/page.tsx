@@ -1,8 +1,8 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { Stack, Typography } from "@mui/material";
-import { useShow } from "@refinedev/core";
+import { useOne, HttpError } from "@refinedev/core";
 import {
   DateField,
   Show,
@@ -10,18 +10,67 @@ import {
   MarkdownField,
 } from "@refinedev/mui";
 
-export default function LogbookShow() {
-  const { query } = useShow({
-    resource: "logbook", // use the logbook resource
-    meta: { select: "*" },
+// Define the props interface to include the id (and locale) from the URL parameters.
+interface LogbookShowProps {
+  params: {
+    logid: string; // the unique identifier for the record
+    locale?: string;
+  };
+}
+// Define the shape of your logbook record.
+interface LogbookRecord {
+  logid: string;
+  id: string;
+  resource: string;
+  date: string;
+  pic: string;
+  pax: number;
+  departure: string;
+  arrival: string;
+  offblock: string;
+  takeoff: string;
+  landing: string;
+  onblock: string;
+  landings: number;
+  flightrules: string;
+  fuel: number;
+  flight_type: string;
+  details: string;
+  billing_details: string;
+  created_at: string;
+}
+
+export default function LogbookShow({ params }: LogbookShowProps) {
+  const { logid } = params;
+
+  // Call useShow and destructure queryResult and setShowId.
+  const { data, isLoading, isError } = useOne<LogbookRecord, HttpError>({
+    resource: "logbook",
+    id: "25442241-82fb-4d11-b3e2-a702a036ec18",
   });
 
-  const { data, isLoading } = query;
   const record = data?.data;
+  console.log("Record data:", record);
+  useEffect(() => {
+    console.log("Record data:", data);
+  }, [data]);
 
   return (
     <Show isLoading={isLoading}>
       <Stack gap={1}>
+        {/* For debugging: display the fetched record as JSON */}
+        <pre
+          style={{
+            fontSize: "0.75rem",
+            fontFamily: "monospace",
+            padding: "1rem",
+            borderRadius: "4px",
+            maxHeight: "8rem",
+            overflow: "hidden",
+          }}
+        >
+          {JSON.stringify(record, null, 2)}
+        </pre>
         <Typography variant="body1" fontWeight="bold">
           Log ID
         </Typography>

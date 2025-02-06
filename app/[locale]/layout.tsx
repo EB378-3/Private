@@ -22,10 +22,10 @@ const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
   : "http://wingtemplate.netlify.app";
 
-const APP_NAME = "Wing T1";
-const APP_DEFAULT_TITLE = "Wing-T1";
+const APP_NAME = "Wing T2";
+const APP_DEFAULT_TITLE = "Wing-T2";
 const APP_TITLE_TEMPLATE = "%s - PWA App";
-const APP_DESCRIPTION = "Wing-T1 Template App";
+const APP_DESCRIPTION = "Wing-T2 Template App";
 
 export const metadata: Metadata = {
   applicationName: APP_NAME,
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     template: APP_TITLE_TEMPLATE,
   }, // default title
   description: APP_DESCRIPTION,
-  manifest: "/manifest.json",
+  manifest: "../manifest.json",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
@@ -102,14 +102,24 @@ export default async function RootLayout({
                           name: "members",
                           list: "/members",
                           create: "/members/create",
-                          edit: "/members/edit/:id",
-                          show: "/members/show/:id",
+                          edit: "/members/edit/:logid",
+                          show: "/members/show/:logid",
                           meta: {
                             canDelete: true,
                           },
                         },
                         {
                           name: "categories",
+                          list: "/categories",
+                          create: "/categories/create",
+                          edit: "/categories/edit/:id",
+                          show: "/categories/show/:id",
+                          meta: {
+                            canDelete: true,
+                          },
+                        },
+                        {
+                          name: "Home",
                           list: "/categories",
                           create: "/categories/create",
                           edit: "/categories/edit/:id",
