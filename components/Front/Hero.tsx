@@ -90,7 +90,7 @@ const Hero = () => {
               variant="h2"
               component="h1"
               sx={{
-                color: theme.palette.primary.contrastText,
+                color: "#fff",
                 fontWeight: "bold",
                 fontSize: { xs: "1rem", sm: "2rem", md: "3rem", lg: "4rem" },
                 lineHeight: 1.2,
@@ -192,7 +192,7 @@ const Hero = () => {
               width: "75%",
               height: "45vh", // Set a fixed height so the banner is visible
               background: (theme) =>
-                `linear-gradient(to top, ${theme.palette.primary.main}, ${theme.palette.primary.dark})`,
+                `linear-gradient(to top, ${theme.palette.primary.dark}, ${theme.palette.primary.light})`,
               transform: "skewX(-20deg)",
               overflow: "hidden", // Hide any overflow outside the container
               position: "relative",

@@ -46,11 +46,16 @@ export default function LogbookShow({ params }: LogbookShowProps) {
   // Call useShow and destructure queryResult and setShowId.
   const { data, isLoading, isError } = useOne<LogbookRecord, HttpError>({
     resource: "logbook",
-    id: "25442241-82fb-4d11-b3e2-a702a036ec18",
+    id: logid,
   });
 
+
+
+
+  console.log("Logid data:", logid);
   const record = data?.data;
   console.log("Record data:", record);
+
   useEffect(() => {
     console.log("Record data:", data);
   }, [data]);

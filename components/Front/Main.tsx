@@ -84,18 +84,19 @@ const Main = () => {
         {/* Problem-Solution Section */}
         <Container sx={{ mt: 8, textAlign: "center", px: { xs: 2, sm: 3, lg: 6 } }}>
           <motion.div initial="hidden" whileInView="visible" variants={slideInRight}>
-            <Typography variant="h3" sx={{ fontWeight: "bold", mb: 4 }}>
-              {t("Affordable Aircraft Rentals")}<br />
+            <Typography variant="h3" sx={{ fontWeight: "bold", mb: 4, }}>
+              {t("Affordable Aircraft Rentals")}<br />{/*New line*/}
               <Box
                 component="span"
                 sx={{
                   backgroundColor: theme.palette.secondary.main,
                   px: 2,
                   py: 1,
-                  color: theme.palette.secondary.contrastText,
+                  color: "#fff",
                   borderRadius: 2,
                   ml: 2,
-                  boxShadow: 3,
+                  boxShadow: "0 2px 4px rgba(255, 255, 255, 0.5)",
+                  textShadow: "0 2px 4px rgba(0,0,0,0.5)",
                 }}
               >
                 {t("In Southern Finland")}

@@ -49,7 +49,7 @@ export const ColorModeContextProvider: React.FC<PropsWithChildren<ColorModeConte
     setMode(nextTheme);
     Cookies.set("theme", nextTheme);
   };
- const theme = createTheme(mode === "light" ? RefineThemes.Blue : RefineThemes.PurpleDark, {
+ const theme = createTheme(mode === "light" ? RefineThemes.Blue : RefineThemes.BlueDark, {
       primary: { // Blue
         main: '#2533be', //HSB 235, 81, 75
         light: '#515BCD', //HSB 235, 60, 80

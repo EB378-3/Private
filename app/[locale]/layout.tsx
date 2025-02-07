@@ -100,30 +100,20 @@ export default async function RootLayout({
                       resources={[
                         {
                           name: "members",
-                          list: "/members",
-                          create: "/members/create",
-                          edit: "/members/edit/:logid",
-                          show: "/members/show/:logid",
+                          list: `/${locale}/members`,
+                          create: `/${locale}/members/create`,
+                          edit: `/${locale}/members/edit/:id`,
+                          show: `/${locale}/members/show/:id`,
                           meta: {
                             canDelete: true,
                           },
                         },
                         {
                           name: "categories",
-                          list: "/categories",
-                          create: "/categories/create",
-                          edit: "/categories/edit/:id",
-                          show: "/categories/show/:id",
-                          meta: {
-                            canDelete: true,
-                          },
-                        },
-                        {
-                          name: "Home",
-                          list: "/categories",
-                          create: "/categories/create",
-                          edit: "/categories/edit/:id",
-                          show: "/categories/show/:id",
+                          list: `/${locale}/categories`,
+                          create: `/${locale}/categories/create`,
+                          edit: `/${locale}/categories/edit/id`,
+                          show: `/${locale}/categories/show/:id`,
                           meta: {
                             canDelete: true,
                           },

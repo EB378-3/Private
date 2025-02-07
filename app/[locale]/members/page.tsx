@@ -13,14 +13,14 @@ import {
 } from "@refinedev/mui";
 
 export default function LogbookList() {
-  // Configure the data grid for the "logbook" resource
+  // Configure the data grid for the "logbook"
   const { dataGridProps } = useDataGrid({
     resource: "logbook",
     syncWithLocation: true,
     meta: { select: "*" },
   });
 
-  const columns: GridColDef[] = React.useMemo(
+  const columns = React.useMemo<GridColDef[]>(
     () => [
       {
         field: "logid",
@@ -78,7 +78,6 @@ export default function LogbookList() {
       {
         field: "offblock",
         headerName: "Offblock",
-        type: "dateTime",
         minWidth: 150,
         headerAlign: "left",
         align: "left",
@@ -221,13 +220,16 @@ export default function LogbookList() {
         headerAlign: "right",
         align: "right",
         sortable: false,
-        renderCell: ({ row }: GridRenderCellParams<any>) => (
-          <>
-            <EditButton hideText recordItemId={`${row.logid}-${row.id}`} />
-            <ShowButton hideText recordItemId={`${row.logid}-${row.id}`} />
-            <DeleteButton hideText recordItemId={`${row.logid}-${row.id}`} />
-          </>
-        ),
+        display: "flex",
+        renderCell: function render({ row }) {
+          return (
+            <>
+              <EditButton hideText recordItemId={row.logid} />
+              <ShowButton hideText recordItemId={row.logid} />
+              <DeleteButton hideText recordItemId={row.logid} />
+            </>
+          );
+        },
       },
     ],
     []
@@ -238,7 +240,6 @@ export default function LogbookList() {
       <DataGrid
         {...dataGridProps}
         columns={columns}
-        getRowId={(row) => `${row.logid}-${row.id}`}
       />
     </List>
   );
