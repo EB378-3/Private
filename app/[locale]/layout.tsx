@@ -3,6 +3,10 @@ import {NextIntlClientProvider} from 'next-intl';
 import {getMessages} from 'next-intl/server';
 import { Refine } from "@refinedev/core";
 import { RefineKbar, RefineKbarProvider } from "@refinedev/kbar";
+import BookIcon from '@mui/icons-material/Book';
+import HomeIcon from '@mui/icons-material/Home';
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import {
   RefineSnackbarProvider,
   useNotificationProvider,
@@ -104,6 +108,10 @@ export default async function RootLayout({
                           create: `/${locale}/members/create`,
                           edit: `/${locale}/members/edit/:id`,
                           show: `/${locale}/members/show/:id`,
+                          meta: {
+                            icon: <HomeIcon />,
+                            label: "Home",
+                          },
                         },
                         {
                           name: "logbook",
@@ -113,13 +121,17 @@ export default async function RootLayout({
                           show: `/${locale}/logbook/show/:id`,
                           meta: {
                             canDelete: true,
+                            icon: <BookIcon />,
                           },
                         },
                         {
-                          name: "profile",
+                          name: "profiles",
                           list: `/${locale}/profile`,
                           edit: `/${locale}/profile/edit/:id`,
                           show: `/${locale}/profile/show/:id`,
+                          meta: {
+                            icon: <AccountBoxIcon />,
+                          },
                         },
                         {
                           name: "booking",
@@ -129,6 +141,7 @@ export default async function RootLayout({
                           show: `/${locale}/booking/show/:id`,
                           meta: {
                             canDelete: true,
+                            icon: <CalendarMonthIcon />,
                           },
                         },
                       ]}

@@ -1,130 +1,260 @@
 "use client";
 
-import { Autocomplete, Box, Select, TextField } from "@mui/material";
+import React from "react";
+import { Box, Select, TextField } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
 import { Edit, useAutocomplete } from "@refinedev/mui";
 import { useForm } from "@refinedev/react-hook-form";
 import { Controller } from "react-hook-form";
 
-export default function BlogPostEdit() {
+export default function LogbookEdit() {
   const {
     saveButtonProps,
-    refineCore: { queryResult, formLoading, onFinish },
+    refineCore: { queryResult, formLoading },
     handleSubmit,
     register,
     control,
     formState: { errors },
   } = useForm({
+    // Removed the unsupported "resource" property.
     refineCoreProps: {
       meta: {
-        select: "*, categories(id,title)",
+        select: "*",
       },
     },
   });
 
-  const blogPostsData = queryResult?.data?.data;
-
-  const { autocompleteProps: categoryAutocompleteProps } = useAutocomplete({
-    resource: "categories",
-    defaultValue: blogPostsData?.categories?.id,
-  });
+  const logbookData = queryResult?.data?.data;
 
   return (
     <Edit isLoading={formLoading} saveButtonProps={saveButtonProps}>
       <Box
         component="form"
-        sx={{ display: "flex", flexDirection: "column" }}
+        sx={{ display: "flex", flexDirection: "column", gap: 2 }}
         autoComplete="off"
       >
+        {/* Date */}
         <TextField
-          {...register("title", {
-            required: "This field is required",
+          {...register("date", {
+            required: "Date is required",
           })}
-          error={!!(errors as any)?.title}
-          helperText={(errors as any)?.title?.message}
+          error={!!errors.date}
+          helperText={errors.date ? String(errors.date.message) : ""}
           margin="normal"
           fullWidth
           InputLabelProps={{ shrink: true }}
-          type="text"
-          label={"Title"}
-          name="title"
+          type="date"
+          label="Date"
+          name="date"
         />
+
+        {/* Pilot in Command */}
+        <TextField
+          {...register("pic", {
+            required: "Pilot in Command is required",
+          })}
+          error={!!errors.pic}
+          helperText={errors.pic ? String(errors.pic.message) : ""}
+          margin="normal"
+          fullWidth
+          InputLabelProps={{ shrink: true }}
+          label="Pilot in Command"
+          name="pic"
+        />
+
+        {/* Passengers */}
+        <TextField
+          {...register("pax", {
+            required: "Passengers is required",
+            valueAsNumber: true,
+          })}
+          error={!!errors.pax}
+          helperText={errors.pax ? String(errors.pax.message) : ""}
+          margin="normal"
+          fullWidth
+          type="number"
+          InputLabelProps={{ shrink: true }}
+          label="Passengers"
+          name="pax"
+        />
+
+        {/* Departure */}
+        <TextField
+          {...register("departure", {
+            required: "Departure is required",
+          })}
+          error={!!errors.departure}
+          helperText={errors.departure ? String(errors.departure.message) : ""}
+          margin="normal"
+          fullWidth
+          InputLabelProps={{ shrink: true }}
+          label="Departure"
+          name="departure"
+        />
+
+        {/* Arrival */}
+        <TextField
+          {...register("arrival", {
+            required: "Arrival is required",
+          })}
+          error={!!errors.arrival}
+          helperText={errors.arrival ? String(errors.arrival.message) : ""}
+          margin="normal"
+          fullWidth
+          InputLabelProps={{ shrink: true }}
+          label="Arrival"
+          name="arrival"
+        />
+
+        {/* Offblock */}
+        <TextField
+          {...register("offblock", {
+            required: "Offblock is required",
+          })}
+          error={!!errors.offblock}
+          helperText={errors.offblock ? String(errors.offblock.message) : ""}
+          margin="normal"
+          fullWidth
+          InputLabelProps={{ shrink: true }}
+          type="datetime-local"
+          label="Offblock"
+          name="offblock"
+        />
+
+        {/* Takeoff */}
+        <TextField
+          {...register("takeoff", {
+            required: "Takeoff is required",
+          })}
+          error={!!errors.takeoff}
+          helperText={errors.takeoff ? String(errors.takeoff.message) : ""}
+          margin="normal"
+          fullWidth
+          InputLabelProps={{ shrink: true }}
+          type="datetime-local"
+          label="Takeoff"
+          name="takeoff"
+        />
+
+        {/* Landing */}
+        <TextField
+          {...register("landing", {
+            required: "Landing is required",
+          })}
+          error={!!errors.landing}
+          helperText={errors.landing ? String(errors.landing.message) : ""}
+          margin="normal"
+          fullWidth
+          InputLabelProps={{ shrink: true }}
+          type="datetime-local"
+          label="Landing"
+          name="landing"
+        />
+
+        {/* Onblock */}
+        <TextField
+          {...register("onblock", {
+            required: "Onblock is required",
+          })}
+          error={!!errors.onblock}
+          helperText={errors.onblock ? String(errors.onblock.message) : ""}
+          margin="normal"
+          fullWidth
+          InputLabelProps={{ shrink: true }}
+          type="datetime-local"
+          label="Onblock"
+          name="onblock"
+        />
+
+        {/* Landings */}
+        <TextField
+          {...register("landings", {
+            required: "Landings is required",
+            valueAsNumber: true,
+          })}
+          error={!!errors.landings}
+          helperText={errors.landings ? String(errors.landings.message) : ""}
+          margin="normal"
+          fullWidth
+          type="number"
+          InputLabelProps={{ shrink: true }}
+          label="Landings"
+          name="landings"
+        />
+
+        {/* Flight Rules */}
         <Controller
+          name="flightrules"
           control={control}
-          name={"categoryId"}
-          rules={{ required: "This field is required" }}
-          // eslint-disable-next-line
-          defaultValue={null as any}
-          render={({ field }) => (
-            <Autocomplete
-              {...categoryAutocompleteProps}
-              {...field}
-              onChange={(_, value) => {
-                field.onChange(value.id);
-              }}
-              getOptionLabel={(item) => {
-                return (
-                  categoryAutocompleteProps?.options?.find((p) => {
-                    const itemId =
-                      typeof item === "object"
-                        ? item?.id?.toString()
-                        : item?.toString();
-                    const pId = p?.id?.toString();
-                    return itemId === pId;
-                  })?.title ?? ""
-                );
-              }}
-              isOptionEqualToValue={(option, value) => {
-                const optionId = option?.id?.toString();
-                const valueId =
-                  typeof value === "object"
-                    ? value?.id?.toString()
-                    : value?.toString();
-                return value === undefined || optionId === valueId;
-              }}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label={"Category"}
-                  margin="normal"
-                  variant="outlined"
-                  error={!!(errors as any)?.categories?.id}
-                  helperText={(errors as any)?.categories?.id?.message}
-                  required
-                />
-              )}
-            />
+          defaultValue="VFR"
+          render={({ field }: { field: any }) => (
+            <Select {...field} label="Flight Rules" fullWidth>
+              <MenuItem value="VFR">VFR</MenuItem>
+              <MenuItem value="IFR">IFR</MenuItem>
+              <MenuItem value="SVFR">SVFR</MenuItem>
+            </Select>
           )}
         />
-        <Controller
-          name="status"
-          control={control}
-          render={({ field }) => {
-            return (
-              <Select
-                {...field}
-                value={field?.value || "draft"}
-                label={"Status"}
-              >
-                <MenuItem value="draft">Draft</MenuItem>
-                <MenuItem value="published">Published</MenuItem>
-                <MenuItem value="rejected">Rejected</MenuItem>
-              </Select>
-            );
-          }}
-        />
+
+        {/* Fuel */}
         <TextField
-          {...register("content", {
-            required: "This field is required",
+          {...register("fuel", {
+            required: "Fuel is required",
+            valueAsNumber: true,
           })}
-          error={!!(errors as any)?.content}
-          helperText={(errors as any)?.content?.message}
+          error={!!errors.fuel}
+          helperText={errors.fuel ? String(errors.fuel.message) : ""}
+          margin="normal"
+          fullWidth
+          type="number"
+          InputLabelProps={{ shrink: true }}
+          label="Fuel"
+          name="fuel"
+        />
+
+        {/* Flight Type */}
+        <TextField
+          {...register("flight_type", {
+            required: "Flight Type is required",
+          })}
+          error={!!errors.flight_type}
+          helperText={errors.flight_type ? String(errors.flight_type.message) : ""}
+          margin="normal"
+          fullWidth
+          InputLabelProps={{ shrink: true }}
+          label="Flight Type"
+          name="flight_type"
+        />
+
+        {/* Details */}
+        <TextField
+          {...register("details", {
+            required: "Details is required",
+          })}
+          error={!!errors.details}
+          helperText={errors.details ? String(errors.details.message) : ""}
           margin="normal"
           fullWidth
           InputLabelProps={{ shrink: true }}
           multiline
-          label={"Content"}
-          name="content"
+          label="Details"
+          name="details"
+          rows={4}
+        />
+
+        {/* Billing Details */}
+        <TextField
+          {...register("billing_details")}
+          error={!!errors.billing_details}
+          helperText={
+            errors.billing_details ? String(errors.billing_details.message) : ""
+          }
+          margin="normal"
+          fullWidth
+          InputLabelProps={{ shrink: true }}
+          multiline
+          label="Billing Details"
+          name="billing_details"
           rows={4}
         />
       </Box>
