@@ -99,11 +99,11 @@ export default async function RootLayout({
                       notificationProvider={useNotificationProvider}
                       resources={[
                         {
-                          name: "members",
-                          list: `/${locale}/members`,
-                          create: `/${locale}/members/create`,
-                          edit: `/${locale}/members/edit/:id`,
-                          show: `/${locale}/members/show/:id`,
+                          name: "logbook",
+                          list: `/${locale}/logbook`,
+                          create: `/${locale}/logbook/create`,
+                          edit: `/${locale}/logbook/edit/:id`,
+                          show: `/${locale}/logbook/show/:id`,
                           meta: {
                             canDelete: true,
                           },

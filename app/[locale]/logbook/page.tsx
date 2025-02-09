@@ -19,11 +19,12 @@ export default function LogbookList() {
     syncWithLocation: true,
     meta: { select: "*" },
   });
+  console.log("Fetched data:", dataGridProps);
 
   const columns = React.useMemo<GridColDef[]>(
     () => [
       {
-        field: "logid",
+        field: "id",
         headerName: "Log ID",
         type: "number",
         minWidth: 70,
@@ -225,7 +226,7 @@ export default function LogbookList() {
           return (
             <>
               <EditButton hideText recordItemId={row.logid} />
-              <ShowButton hideText recordItemId={row.logid} />
+              <ShowButton hideText recordItemId={row.id} />
               <DeleteButton hideText recordItemId={row.logid} />
             </>
           );

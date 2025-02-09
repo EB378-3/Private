@@ -1,8 +1,7 @@
 "use client";
 
-import React, { useEffect } from "react";
 import { Stack, Typography } from "@mui/material";
-import { useOne, HttpError } from "@refinedev/core";
+import { useShow } from "@refinedev/core";
 import {
   DateField,
   Show,
@@ -10,17 +9,10 @@ import {
   MarkdownField,
 } from "@refinedev/mui";
 
-// Define the props interface to include the id (and locale) from the URL parameters.
-interface LogbookShowProps {
-  params: {
-    logid: string; // the unique identifier for the record
-    locale?: string;
-  };
-}
 // Define the shape of your logbook record.
 interface LogbookRecord {
-  logid: string;
   id: string;
+  uid: string;
   resource: string;
   date: string;
   pic: string;
@@ -40,51 +32,32 @@ interface LogbookRecord {
   created_at: string;
 }
 
-export default function LogbookShow({ params }: LogbookShowProps) {
-  const { logid } = params;
 
-  // Call useShow and destructure queryResult and setShowId.
-  const { data, isLoading, isError } = useOne<LogbookRecord, HttpError>({
-    resource: "logbook",
-    id: logid,
-  });
+export default function LogbookShow() {
+    const { query } = useShow({
+      meta: {
+        select: "*",
+      },
+    });
+  
+    const { data, isLoading } = query;
+  
+    const record = data?.data;
 
-
-
-
-  console.log("Logid data:", logid);
-  const record = data?.data;
-  console.log("Record data:", record);
-
-  useEffect(() => {
-    console.log("Record data:", data);
-  }, [data]);
+  console.log("Fetched logbook record:", record);
 
   return (
     <Show isLoading={isLoading}>
-      <Stack gap={1}>
-        {/* For debugging: display the fetched record as JSON */}
-        <pre
-          style={{
-            fontSize: "0.75rem",
-            fontFamily: "monospace",
-            padding: "1rem",
-            borderRadius: "4px",
-            maxHeight: "8rem",
-            overflow: "hidden",
-          }}
-        >
-          {JSON.stringify(record, null, 2)}
-        </pre>
+      <Stack gap={1} sx={{ p: 2 }}>
         <Typography variant="body1" fontWeight="bold">
           Log ID
         </Typography>
-        <TextField value={record?.logid} />
+        <TextField value={record?.id} />
 
         <Typography variant="body1" fontWeight="bold">
           UUID
         </Typography>
-        <TextField value={record?.id} />
+        <TextField value={record?.uid} />
 
         <Typography variant="body1" fontWeight="bold">
           Resource
