@@ -191,7 +191,6 @@ export default function LogbookList() {
       {
         field: "created_at",
         headerName: "Created At",
-        type: "dateTime",
         minWidth: 150,
         headerAlign: "left",
         align: "left",
