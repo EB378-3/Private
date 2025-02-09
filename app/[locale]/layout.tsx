@@ -99,6 +99,13 @@ export default async function RootLayout({
                       notificationProvider={useNotificationProvider}
                       resources={[
                         {
+                          name: "members",//Rescource table
+                          list: `/${locale}/members`,
+                          create: `/${locale}/members/create`,
+                          edit: `/${locale}/members/edit/:id`,
+                          show: `/${locale}/members/show/:id`,
+                        },
+                        {
                           name: "logbook",
                           list: `/${locale}/logbook`,
                           create: `/${locale}/logbook/create`,
@@ -109,11 +116,17 @@ export default async function RootLayout({
                           },
                         },
                         {
-                          name: "categories",
-                          list: `/${locale}/categories`,
-                          create: `/${locale}/categories/create`,
-                          edit: `/${locale}/categories/edit/id`,
-                          show: `/${locale}/categories/show/:id`,
+                          name: "profile",
+                          list: `/${locale}/profile`,
+                          edit: `/${locale}/profile/edit/:id`,
+                          show: `/${locale}/profile/show/:id`,
+                        },
+                        {
+                          name: "booking",
+                          list: `/${locale}/booking`,
+                          create: `/${locale}/booking/create`,
+                          edit: `/${locale}/booking/edit/:id`,
+                          show: `/${locale}/booking/show/:id`,
                           meta: {
                             canDelete: true,
                           },

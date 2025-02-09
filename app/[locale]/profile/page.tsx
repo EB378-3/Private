@@ -15,6 +15,7 @@ import {
 export default function LogbookList() {
   // Configure the data grid for the "logbook"
   const { dataGridProps } = useDataGrid({
+
     syncWithLocation: true,
     meta: { select: "*" },
   });
