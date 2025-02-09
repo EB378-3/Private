@@ -12,15 +12,26 @@ import {
   useDataGrid,
 } from "@refinedev/mui";
 
+const renderDateCell = (params: GridRenderCellParams<any>) => {
+  const { value } = params;
+  console.log("Raw date value:", value);
+  if (!value) return <Typography variant="body2">-</Typography>;
+  const dateObj = new Date(value);
+  if (isNaN(dateObj.getTime())) {
+    return <Typography variant="body2">Invalid Date</Typography>;
+  }
+  return <DateField value={dateObj} />;
+};
+
 export default function LogbookList() {
-  // Configure the data grid for the "logbook"
   const { dataGridProps } = useDataGrid({
     syncWithLocation: true,
     meta: { select: "*" },
   });
+
   console.log("Fetched data:", dataGridProps);
 
-  const columns = React.useMemo<GridColDef[]>(
+  const columns: GridColDef[] = React.useMemo(
     () => [
       {
         field: "id",
@@ -33,15 +44,11 @@ export default function LogbookList() {
       {
         field: "date",
         headerName: "Date",
-        type: "date",
         minWidth: 100,
         headerAlign: "left",
         align: "left",
-        valueGetter: ({ value }: GridRenderCellParams<any>) =>
-          value ? new Date(value) : null,
-        renderCell: ({ value }: GridRenderCellParams<any>) => (
-          <DateField value={value} />
-        ),
+        // Remove valueGetter to let renderCell handle conversion
+        renderCell: renderDateCell,
       },
       {
         field: "pic",
@@ -52,7 +59,7 @@ export default function LogbookList() {
         renderCell: ({ value }: GridRenderCellParams<any>) => (
           <Typography variant="body2">{value || "-"}</Typography>
         ),
-      },      
+      },
       {
         field: "pax",
         headerName: "Passengers",
@@ -81,50 +88,31 @@ export default function LogbookList() {
         minWidth: 150,
         headerAlign: "left",
         align: "left",
-        valueGetter: ({ value }: GridRenderCellParams<any>) =>
-          value ? new Date(value) : null,
-        renderCell: ({ value }: GridRenderCellParams<any>) => (
-          <DateField value={value} />
-        ),
+        renderCell: renderDateCell,
       },
       {
         field: "takeoff",
         headerName: "Takeoff",
-        type: "dateTime",
         minWidth: 150,
         headerAlign: "left",
         align: "left",
-        valueGetter: ({ value }: GridRenderCellParams<any>) =>
-          value ? new Date(value) : null,
-        renderCell: ({ value }: GridRenderCellParams<any>) => (
-          <DateField value={value} />
-        ),
+        renderCell: renderDateCell,
       },
       {
         field: "landing",
         headerName: "Landing",
-        type: "dateTime",
         minWidth: 150,
         headerAlign: "left",
         align: "left",
-        valueGetter: ({ value }: GridRenderCellParams<any>) =>
-          value ? new Date(value) : null,
-        renderCell: ({ value }: GridRenderCellParams<any>) => (
-          <DateField value={value} />
-        ),
+        renderCell: renderDateCell,
       },
       {
         field: "onblock",
         headerName: "Onblock",
-        type: "dateTime",
         minWidth: 150,
         headerAlign: "left",
         align: "left",
-        valueGetter: ({ value }: GridRenderCellParams<any>) =>
-          value ? new Date(value) : null,
-        renderCell: ({ value }: GridRenderCellParams<any>) => (
-          <DateField value={value} />
-        ),
+        renderCell: renderDateCell,
       },
       {
         field: "landings",
@@ -207,11 +195,7 @@ export default function LogbookList() {
         minWidth: 150,
         headerAlign: "left",
         align: "left",
-        valueGetter: ({ value }: GridRenderCellParams<any>) =>
-          value ? new Date(value) : null,
-        renderCell: ({ value }: GridRenderCellParams<any>) => (
-          <DateField value={value} />
-        ),
+        renderCell: renderDateCell,
       },
       {
         field: "actions",
@@ -220,16 +204,13 @@ export default function LogbookList() {
         headerAlign: "right",
         align: "right",
         sortable: false,
-        display: "flex",
-        renderCell: function render({ row }) {
-          return (
-            <>
-              <EditButton hideText recordItemId={row.id} />
-              <ShowButton hideText recordItemId={row.id} />
-              <DeleteButton hideText recordItemId={row.id} />
-            </>
-          );
-        },
+        renderCell: ({ row }: GridRenderCellParams<any>) => (
+          <>
+            <EditButton hideText recordItemId={row.id} />
+            <ShowButton hideText recordItemId={row.id} />
+            <DeleteButton hideText recordItemId={row.id} />
+          </>
+        ),
       },
     ],
     []
@@ -237,10 +218,7 @@ export default function LogbookList() {
 
   return (
     <List>
-      <DataGrid
-        {...dataGridProps}
-        columns={columns}
-      />
+      <DataGrid {...dataGridProps} columns={columns} />
     </List>
   );
 }
