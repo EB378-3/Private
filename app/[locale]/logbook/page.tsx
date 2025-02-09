@@ -203,6 +203,7 @@ export default function LogbookList() {
         headerAlign: "right",
         align: "right",
         sortable: false,
+        display: "flex",
         renderCell: ({ row }: GridRenderCellParams<any>) => (
           <>
             <EditButton hideText recordItemId={row.id} />
