@@ -1,247 +1,118 @@
 "use client";
 
 import React from "react";
-import { Typography } from "@mui/material";
-import { DataGrid, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import {
-  List,
-  DateField,
-  DeleteButton,
-  EditButton,
-  ShowButton,
-  useDataGrid,
-} from "@refinedev/mui";
+  Box,
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  CardMedia,
+  Grid,
+  Typography,
+} from "@mui/material";
+import { useGetIdentity, useOne, HttpError } from "@refinedev/core";
+import { useTranslations } from "next-intl";
+import { EditButton } from "@refinedev/mui";
+import ProfileTotals from "@components/profile/ProfileTotals";
 
-export default function LogbookList() {
-  // Configure the data grid for the "logbook"
-  const { dataGridProps } = useDataGrid({
+// Define the shape of your profile data.
+interface ProfileData {
+  id: string;
+  avatar?: string;
+  fullname: string;
+  username: string;
+  email: string;
+  phone: string;
+  address: string;
+  city: string;
+  country: string;
+  zip: string;
+  role: string;
+  NF: boolean;
+  IR: boolean;
+}
 
-    syncWithLocation: true,
+export default function ProfilePage() {
+  const t = useTranslations("Profile");
+
+  // Always call useGetIdentity.
+  const { data: identity } = useGetIdentity<{ id: string }>();
+  const userId = identity?.id ?? "";
+
+  // Always call useOne; disable it if there's no valid userId.
+  const { data, isLoading, isError } = useOne<ProfileData, HttpError>({
+    id: userId,
     meta: { select: "*" },
   });
-  console.log("Fetched data:", dataGridProps);
 
-  const columns = React.useMemo<GridColDef[]>(
-    () => [
-      {
-        field: "id",
-        headerName: "Log ID",
-        type: "number",
-        minWidth: 70,
-        headerAlign: "left",
-        align: "left",
-      },
-      {
-        field: "date",
-        headerName: "Date",
-        type: "date",
-        minWidth: 100,
-        headerAlign: "left",
-        align: "left",
-        valueGetter: ({ value }: GridRenderCellParams<any>) =>
-          value ? new Date(value) : null,
-        renderCell: ({ value }: GridRenderCellParams<any>) => (
-          <DateField value={value} />
-        ),
-      },
-      {
-        field: "pic",
-        headerName: "Pilot in Command",
-        minWidth: 150,
-        headerAlign: "left",
-        align: "left",
-        renderCell: ({ value }: GridRenderCellParams<any>) => (
-          <Typography variant="body2">{value || "-"}</Typography>
-        ),
-      },      
-      {
-        field: "pax",
-        headerName: "Passengers",
-        type: "number",
-        minWidth: 100,
-        headerAlign: "left",
-        align: "left",
-      },
-      {
-        field: "departure",
-        headerName: "Departure",
-        minWidth: 150,
-        headerAlign: "left",
-        align: "left",
-      },
-      {
-        field: "arrival",
-        headerName: "Arrival",
-        minWidth: 150,
-        headerAlign: "left",
-        align: "left",
-      },
-      {
-        field: "offblock",
-        headerName: "Offblock",
-        minWidth: 150,
-        headerAlign: "left",
-        align: "left",
-        valueGetter: ({ value }: GridRenderCellParams<any>) =>
-          value ? new Date(value) : null,
-        renderCell: ({ value }: GridRenderCellParams<any>) => (
-          <DateField value={value} />
-        ),
-      },
-      {
-        field: "takeoff",
-        headerName: "Takeoff",
-        type: "dateTime",
-        minWidth: 150,
-        headerAlign: "left",
-        align: "left",
-        valueGetter: ({ value }: GridRenderCellParams<any>) =>
-          value ? new Date(value) : null,
-        renderCell: ({ value }: GridRenderCellParams<any>) => (
-          <DateField value={value} />
-        ),
-      },
-      {
-        field: "landing",
-        headerName: "Landing",
-        type: "dateTime",
-        minWidth: 150,
-        headerAlign: "left",
-        align: "left",
-        valueGetter: ({ value }: GridRenderCellParams<any>) =>
-          value ? new Date(value) : null,
-        renderCell: ({ value }: GridRenderCellParams<any>) => (
-          <DateField value={value} />
-        ),
-      },
-      {
-        field: "onblock",
-        headerName: "Onblock",
-        type: "dateTime",
-        minWidth: 150,
-        headerAlign: "left",
-        align: "left",
-        valueGetter: ({ value }: GridRenderCellParams<any>) =>
-          value ? new Date(value) : null,
-        renderCell: ({ value }: GridRenderCellParams<any>) => (
-          <DateField value={value} />
-        ),
-      },
-      {
-        field: "landings",
-        headerName: "Landings",
-        type: "number",
-        minWidth: 100,
-        headerAlign: "left",
-        align: "left",
-      },
-      {
-        field: "flightrules",
-        headerName: "Flight Rules",
-        minWidth: 120,
-        headerAlign: "left",
-        align: "left",
-      },
-      {
-        field: "night",
-        headerName: "Night",
-        minWidth: 100,
-        headerAlign: "left",
-        align: "left",
-      },
-      {
-        field: "ir",
-        headerName: "IR",
-        minWidth: 100,
-        headerAlign: "left",
-        align: "left",
-      },
-      {
-        field: "fuel",
-        headerName: "Fuel",
-        type: "number",
-        minWidth: 100,
-        headerAlign: "left",
-        align: "left",
-      },
-      {
-        field: "flight_type",
-        headerName: "Flight Type",
-        minWidth: 120,
-        headerAlign: "left",
-        align: "left",
-      },
-      {
-        field: "details",
-        headerName: "Details",
-        minWidth: 200,
-        headerAlign: "left",
-        align: "left",
-        renderCell: ({ value }: GridRenderCellParams<any>) => {
-          if (!value) return "-";
-          return (
-            <Typography variant="body2" noWrap>
-              {value}
-            </Typography>
-          );
-        },
-      },
-      {
-        field: "billing_details",
-        headerName: "Billing Details",
-        minWidth: 200,
-        headerAlign: "left",
-        align: "left",
-        renderCell: ({ value }: GridRenderCellParams<any>) => {
-          if (!value) return "-";
-          return (
-            <Typography variant="body2" noWrap>
-              {value}
-            </Typography>
-          );
-        },
-      },
-      {
-        field: "created_at",
-        headerName: "Created At",
-        type: "dateTime",
-        minWidth: 150,
-        headerAlign: "left",
-        align: "left",
-        valueGetter: ({ value }: GridRenderCellParams<any>) =>
-          value ? new Date(value) : null,
-        renderCell: ({ value }: GridRenderCellParams<any>) => (
-          <DateField value={value} />
-        ),
-      },
-      {
-        field: "actions",
-        headerName: "Actions",
-        minWidth: 150,
-        headerAlign: "right",
-        align: "right",
-        sortable: false,
-        display: "flex",
-        renderCell: function render({ row }) {
-          return (
-            <>
-              <EditButton hideText recordItemId={row.id} />
-              <ShowButton hideText recordItemId={row.id} />
-              <DeleteButton hideText recordItemId={row.id} />
-            </>
-          );
-        },
-      },
-    ],
-    []
-  );
+  // While identity isn't loaded, show a loading state.
+  if (!userId) {
+    return <Typography>Loading...</Typography>;
+  }
+
+  if (isLoading || !data?.data) {
+    return <Typography>Loading profile...</Typography>;
+  }
+
+  if (isError) {
+    return <Typography>Error loading profile</Typography>;
+  }
+
+  const profile = data.data;
 
   return (
-    <List>
-      <DataGrid
-        {...dataGridProps}
-        columns={columns}
-      />
-    </List>
+    <Box sx={{ p: 4 }}>
+      <Typography variant="h4" sx={{ mb: 4 }}>
+        Profile
+      </Typography>
+      <Grid container spacing={4}>
+        {/* Profile Card on the left */}
+        <Grid item xs={12} md={8}>
+          <Card sx={{ margin: "auto", boxShadow: 3 }}>
+            <CardMedia
+              component="img"
+              height="200"
+              image={profile.avatar || "/default-avatar.png"}
+              alt="Profile Picture"
+            />
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="div">
+                {profile.fullname || "No Name"}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                Email: {profile.email}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                Username: {profile.username}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                Phone: {profile.phone}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                Address: {profile.address}, {profile.city}, {profile.country}{" "}
+                {profile.zip}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                Role: {profile.role}
+              </Typography>
+              <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
+                Qualifications: {profile.NF ? "NF " : ""}{profile.IR ? "IR" : ""}
+              </Typography>
+              {/* Embed the totals component */}
+              <Box sx={{ mt: 3 }}>
+                <Typography variant="h6" gutterBottom>
+                  {t("Total Hours on Plane") || "Total Hours on Plane"}
+                </Typography>
+                <ProfileTotals />
+              </Box>
+            </CardContent>
+            <CardActions>
+              <EditButton hideText recordItemId={profile.id} />
+            </CardActions>
+          </Card>
+        </Grid>
+      </Grid>
+    </Box>
   );
 }

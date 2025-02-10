@@ -127,18 +127,42 @@ export default async function RootLayout({
                         {
                           name: "profiles",
                           list: `/${locale}/profile`,
-                          edit: `/${locale}/profile/edit/:id`,
-                          show: `/${locale}/profile/show/:id`,
+                          edit: `/${locale}/profile/edit`,
                           meta: {
                             icon: <AccountBoxIcon />,
+                            label: "Profile",
                           },
                         },
                         {
-                          name: "booking",
+                          name: "cal",
                           list: `/${locale}/booking`,
                           create: `/${locale}/booking/create`,
                           edit: `/${locale}/booking/edit/:id`,
                           show: `/${locale}/booking/show/:id`,
+                          meta: {
+                            canDelete: true,
+                            icon: <CalendarMonthIcon />,
+                            label: "Bookings",
+                          },
+                        },
+                        {
+                          name: "Admin",
+                          list: `/${locale}/admin`,
+                          create: `/${locale}/admin/create`,
+                          edit: `/${locale}/admin/edit/:id`,
+                          show: `/${locale}/admin/show/:id`,
+                          meta: {
+                            canDelete: true,
+                            icon: <CalendarMonthIcon />,
+                            label: "Admin",
+                          },
+                        },
+                        {
+                          name: "resources",
+                          list: `/${locale}/aircraft`,
+                          create: `/${locale}/aircraft/create`,
+                          edit: `/${locale}/aircraft/edit/:id`,
+                          show: `/${locale}/aircraft/show/:id`,
                           meta: {
                             canDelete: true,
                             icon: <CalendarMonthIcon />,
