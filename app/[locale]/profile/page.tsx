@@ -3,20 +3,18 @@
 import React from "react";
 import {
   Box,
-  Button,
-  Card,
-  CardActions,
-  CardContent,
-  CardMedia,
   Grid,
   Typography,
+  Card,
+  CardContent,
+  CardMedia,
+  CardActions,
+  Button,
 } from "@mui/material";
 import { useGetIdentity, useOne, HttpError } from "@refinedev/core";
 import { useTranslations } from "next-intl";
 import { EditButton } from "@refinedev/mui";
-import ProfileTotals from "@components/profile/ProfileTotals";
 
-// Define the shape of your profile data.
 interface ProfileData {
   id: string;
   avatar?: string;
@@ -24,37 +22,43 @@ interface ProfileData {
   username: string;
   email: string;
   phone: string;
-  address: string;
+  streetaddress: string;
   city: string;
   country: string;
   zip: string;
   role: string;
   NF: boolean;
   IR: boolean;
+  flight_hours_per_resource?: Record<string, number>;
 }
+
+// Helper function to format decimal hours into hours and minutes.
+const formatHours = (decimalHours: number) => {
+  const hours = Math.floor(decimalHours);
+  const minutes = Math.round((decimalHours - hours) * 60);
+  return `${hours}h ${minutes}m`;
+};
 
 export default function ProfilePage() {
   const t = useTranslations("Profile");
 
-  // Always call useGetIdentity.
+  // Get the current user's identity.
   const { data: identity } = useGetIdentity<{ id: string }>();
   const userId = identity?.id ?? "";
 
-  // Always call useOne; disable it if there's no valid userId.
+  // Fetch the profile data using refined's useOne hook.
   const { data, isLoading, isError } = useOne<ProfileData, HttpError>({
     id: userId,
     meta: { select: "*" },
   });
 
-  // While identity isn't loaded, show a loading state.
+  // Show a loading state if no identity or profile data is available.
   if (!userId) {
     return <Typography>Loading...</Typography>;
   }
-
   if (isLoading || !data?.data) {
     return <Typography>Loading profile...</Typography>;
   }
-
   if (isError) {
     return <Typography>Error loading profile</Typography>;
   }
@@ -69,42 +73,117 @@ export default function ProfilePage() {
       <Grid container spacing={4}>
         {/* Profile Card on the left */}
         <Grid item xs={12} md={8}>
-          <Card sx={{ margin: "auto", boxShadow: 3 }}>
+          <Card sx={{ margin: "auto", boxShadow: 3, borderRadius: "2%" }}>
+            {/* Card header with colored background and circular profile image */}
             <CardMedia
-              component="img"
-              height="200"
-              image={profile.avatar || "/default-avatar.png"}
-              alt="Profile Picture"
-            />
+              component="div"
+              sx={{
+                height: 200,
+                backgroundColor: "primary.main",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Box
+                sx={{
+                  width: 100,
+                  height: 100,
+                  borderRadius: "50%",
+                  backgroundColor: "white",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  overflow: "hidden",
+                }}
+              >
+                {profile.avatar ? (
+                  <img
+                    src={profile.avatar}
+                    alt="Profile"
+                    style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                  />
+                ) : (
+                  <Typography variant="h4" color="primary">
+                    {profile.fullname ? profile.fullname.charAt(0).toUpperCase() : "?"}
+                  </Typography>
+                )}
+              </Box>
+            </CardMedia>
+            {/* Card content with profile details */}
             <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
+              <Typography gutterBottom variant="h5">
                 {profile.fullname || "No Name"}
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                Email: {profile.email}
+                {t("email")}: {profile.email}
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                Username: {profile.username}
+                {t("username")}: {profile.username}
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                Phone: {profile.phone}
+                {t("phone")}: {profile.phone}
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                Address: {profile.address}, {profile.city}, {profile.country}{" "}
+                {t("address")}: {profile.streetaddress}, {profile.city}, {profile.country}{" "}
                 {profile.zip}
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                Role: {profile.role}
+                {t("role")}: {profile.role}
               </Typography>
               <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
-                Qualifications: {profile.NF ? "NF " : ""}{profile.IR ? "IR" : ""}
+                {t("qualifications")}: {profile.NF ? "NF" : ""}, {profile.IR ? "IR" : ""}
               </Typography>
-              {/* Embed the totals component */}
+              {/* Totals Section */}
               <Box sx={{ mt: 3 }}>
                 <Typography variant="h6" gutterBottom>
                   {t("Total Hours on Plane") || "Total Hours on Plane"}
                 </Typography>
-                <ProfileTotals />
+                {profile.flight_hours_per_resource &&
+                Object.keys(profile.flight_hours_per_resource).length > 0 ? (
+                  <Box component="table" sx={{ width: "100%", borderCollapse: "collapse" }}>
+                    <Box component="thead">
+                      <Box component="tr">
+                        <Box
+                          component="th"
+                          sx={{ border: "1px solid", borderColor: "grey.400", p: 1 }}
+                        >
+                          {t("resource")}
+                        </Box>
+                        <Box
+                          component="th"
+                          sx={{ border: "1px solid", borderColor: "grey.400", p: 1 }}
+                        >
+                          {t("total_hours")}
+                        </Box>
+                      </Box>
+                    </Box>
+                    <Box component="tbody">
+                      {Object.entries(profile.flight_hours_per_resource).map(
+                        ([aircraft, hours]) => (
+                          <Box component="tr" key={aircraft}>
+                            <Box
+                              component="td"
+                              sx={{ border: "1px solid", borderColor: "grey.400", p: 1 }}
+                            >
+                              {aircraft}
+                            </Box>
+                            <Box
+                              component="td"
+                              sx={{ border: "1px solid", borderColor: "grey.400", p: 1 }}
+                            >
+                              {formatHours(hours as number)}
+                            </Box>
+                          </Box>
+                        )
+                      )}
+                    </Box>
+                  </Box>
+                ) : (
+                  <Typography variant="body2" color="grey.600">
+                    No data available...
+                  </Typography>
+                )}
               </Box>
             </CardContent>
             <CardActions>

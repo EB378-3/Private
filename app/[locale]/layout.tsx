@@ -103,14 +103,12 @@ export default async function RootLayout({
                       notificationProvider={useNotificationProvider}
                       resources={[
                         {
-                          name: "members",//Rescource table
-                          list: `/${locale}/members`,
-                          create: `/${locale}/members/create`,
-                          edit: `/${locale}/members/edit/:id`,
-                          show: `/${locale}/members/show/:id`,
+                          name: "profiles",
+                          list: `/${locale}/profile`,
+                          edit: `/${locale}/profile/edit/:id`,
                           meta: {
-                            icon: <HomeIcon />,
-                            label: "Home",
+                            icon: <AccountBoxIcon />,
+                            label: "Profile",
                           },
                         },
                         {
@@ -122,15 +120,6 @@ export default async function RootLayout({
                           meta: {
                             canDelete: true,
                             icon: <BookIcon />,
-                          },
-                        },
-                        {
-                          name: "profiles",
-                          list: `/${locale}/profile`,
-                          edit: `/${locale}/profile/edit`,
-                          meta: {
-                            icon: <AccountBoxIcon />,
-                            label: "Profile",
                           },
                         },
                         {
@@ -159,10 +148,10 @@ export default async function RootLayout({
                         },
                         {
                           name: "resources",
-                          list: `/${locale}/aircraft`,
-                          create: `/${locale}/aircraft/create`,
-                          edit: `/${locale}/aircraft/edit/:id`,
-                          show: `/${locale}/aircraft/show/:id`,
+                          list: `/${locale}/resource`,
+                          create: `/${locale}/resource/create`,
+                          edit: `/${locale}/resource/edit/:id`,
+                          show: `/${locale}/resource/show/:id`,
                           meta: {
                             canDelete: true,
                             icon: <CalendarMonthIcon />,
